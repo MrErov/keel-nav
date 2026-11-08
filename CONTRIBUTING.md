@@ -92,21 +92,54 @@ Every meta-skill PR is checked against these. A violation is a blocking review.
 
 ## 4. Harness adapter contributions
 
-Adapters are **thin shims** (~50 lines max). They exist to make a harness read
-`AGENTS.md` and `.meta-skills/`. They are *not* places to extend the
-methodology.
+Adapters are **thin entry points** that make a harness read `AGENTS.md` and
+`.meta-skills/`. They are *not* places to extend the methodology.
+
+### Two adapter shapes
+
+Harnesses come in two dispatch shapes. Pick the one that matches the
+harness; do not force one shape onto a harness that does not support it.
+
+| Shape | When to use | Size ceiling | Examples |
+|-------|-------------|--------------|----------|
+| **Per-phase shims** | Harness loads skills on demand (e.g. `/skill-name`) | ≤50 lines per shim | `harnesses/opencode/skills/*/SKILL.md` |
+| **Persistent directive file** | Harness reads one rules file at session start, no per-skill loading | ≤250 lines total; prioritize the six-phase index, dispatch pattern, and Phase 1b blindness rule | `harnesses/claude-code/CLAUDE.md`, `harnesses/cursor/.cursorrules` |
+
+Neither shape may embed the protocol. Both must:
+
+- **Reference** `.meta-skills/` and `AGENTS.md` by path — never copy their
+  content.
+- Contain exactly one dispatch mechanism (per-phase invocation for shims;
+  natural-language pattern for directive files).
+- Document the Phase 1b fresh-session requirement, and (if the harness has
+  no mechanical enforcement) declare this as a **known limitation** in the
+  adapter's README.
+- Be documented in a `README.md` in the same directory, with install steps
+  and a verification checklist.
+
+### PR requirements for a new adapter
 
 An adapter PR must:
 
-- Point to `AGENTS.md` and the relevant `.meta-skills/` file — no copies.
-- Provide one minimal example invocation.
-- Document the harness's expected file paths in `harnesses/<name>/README.md`.
-- **Not** introduce any code beyond what the harness itself requires to load
-  a Markdown file.
+1. Include the README with install steps and verification.
+2. State which of the two shapes was chosen and why.
+3. Link to a verification session (screenshot, transcript, or a checklist
+   the reviewer can run) showing each `/phase-*` (or natural-language
+   equivalent) invoking the correct meta-skill.
+4. **Not** introduce any code beyond what the harness itself requires to
+   load a Markdown file.
+5. **Not** duplicate another adapter's content. If two adapters would
+   share more than 20% of their content, one of them is redundant —
+   escalate before opening the PR.
 
-Adapters for `deepseek-harness` should use `dsh-bridges` (the community
-plugin that bridges existing Claude Code / OpenCode / Cursor setups). Do not
-re-implement the bridge.
+### Bridges
+
+If a harness can read another harness's adapter (e.g. `dsh-bridges` for
+DeepSeek Harness), **do not write a shim** — write a documentation-only
+directory (`harnesses/<name>/README.md`) explaining how the bridge works
+and which existing adapter to install first. Bridges are the highest form
+of Keel Nav agnosticism; duplicating the work they already do is a
+regression, not a contribution.
 
 ---
 

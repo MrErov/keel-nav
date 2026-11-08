@@ -90,33 +90,34 @@ behavior.
 ```
 keel-nav/
 ├── .meta-skills/                    # Agnostic core (pure Markdown)
-│   ├── 00-context-bootstrap.md      ✅ v0.1.0
-│   ├── 01-sdd-spec-writer.md        ✅ v0.1.0
-│   ├── 02-egm-goldfish-audit.md     ✅ v0.1.0
-│   ├── 03-tdd-cycle.md              ✅ v0.1.0
-│   ├── 04-odd-vertical-slice.md     ✅ v0.1.0
-│   └── 05-drift-control.md          ✅ v0.1.0
+│   ├── 00-context-bootstrap.md      ✅ v0.1.0-alpha
+│   ├── 01-sdd-spec-writer.md        ✅ v0.1.0-alpha
+│   ├── 02-egm-goldfish-audit.md     ✅ v0.1.0-alpha
+│   ├── 03-tdd-cycle.md              ✅ v0.1.0-alpha
+│   ├── 04-odd-vertical-slice.md     ✅ v0.1.0-alpha
+│   └── 05-drift-control.md          ✅ v0.1.0-alpha
 ├── templates/                       # Artifacts produced by the skills
-│   ├── spec.template.md             ✅ v0.1.0
-│   ├── test-plan.template.md        ✅ v0.1.0
-│   └── drift-report.template.md     ✅ v0.1.0
+│   ├── spec.template.md             ✅ v0.1.0-alpha
+│   ├── test-plan.template.md        ✅ v0.1.0-alpha
+│   └── drift-report.template.md     ✅ v0.1.0-alpha
 ├── harnesses/                       # Per-tool adapters (thin entry points)
-│   ├── opencode/                    ✅ v0.2.0
-│   ├── claude-code/                 ✅ v0.2.0
-│   ├── cursor/                      ✅ v0.2.0
-│   └── generic/                     ✅ v0.1.0
+│   ├── opencode/                    ✅ v0.2.0-alpha
+│   ├── claude-code/                 ✅ v0.2.0-alpha
+│   ├── cursor/                      ✅ v0.2.0-alpha
+│   ├── generic/                     ✅ v0.1.0-alpha
+│   └── dsh-bridges/                 ✅ v0.2.0-alpha  (documentation only)
 ├── docs/context/                    # Phase 0 self-applied (Elephant Memory)
 │   └── 00-overview.md               ✅ Phase 0 baseline
 ├── AGENTS.md                        ✅ Canonical AI behavioral contract
 ├── CONTRIBUTING.md                  ✅ Contribution protocol
+├── CHANGELOG.md                     ✅ v0.2.0-alpha
 ├── LICENSE                          ✅ MIT
 ├── .gitignore                       ✅
 └── README.md                        ✅
 ```
 
 > **Legend:** ✅ = shipped. The version in parentheses is the release
-> where the file landed. All files listed above are present in the repo;
-> `CHANGELOG.md` and the release tag are the remaining release ceremony.
+> where the file landed. The tree is fully shipped as of `v0.2.0-alpha`.
 
 ## Quick Start
 
@@ -145,14 +146,19 @@ No installer. No `npm i`. Just text your LLM can read.
 | Claude Code | `CLAUDE.md` + directives | `harnesses/claude-code/CLAUDE.md` |
 | Cursor | `.cursorrules` | `harnesses/cursor/.cursorrules` |
 | Copilot CLI / Gemini CLI / Web LLMs | Pasted prompt | `harnesses/generic/prompts/*.md` |
-| **DeepSeek Harness** | Via [`dsh-bridges`](https://github.com/deepseek-ai/dsh-bridges) plugin | Auto-detected from `harnesses/*` |
+| **DeepSeek Harness** | Via [`dsh-bridges`](https://github.com/deepseek-ai/dsh-bridges) (auto-detects the adapters above) | No install; `dsh-bridges` reads OpenCode / Claude Code / Cursor layouts |
 
-Each harness is a thin entry point that points at `.meta-skills/`, not a fork.
+Each harness is a **thin entry point** that points at `.meta-skills/`, not a
+fork. Two shapes: per-phase shims (≤50 lines each, e.g. OpenCode) and
+persistent directive files (≤250 lines total, e.g. Claude Code, Cursor).
+Neither embeds the protocol.
 
 > **Why DeepSeek appears as a bridge and not a directory:** `dsh-bridges`
 > is a community plugin that reads existing Claude Code / OpenCode / Cursor
 > adapter layouts. Keel Nav doesn't need a `harnesses/deepseek/` directory —
-> the other adapters are shipped, and `dsh-bridges` picks them up.
+> the other adapters are shipped, and `dsh-bridges` picks them up. See
+> [`harnesses/dsh-bridges/`](harnesses/dsh-bridges/) for the integration
+> notes.
 > That is Keel Nav's agnosticism working as intended.
 
 ## Meta-skill reference

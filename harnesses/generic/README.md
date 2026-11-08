@@ -45,8 +45,6 @@ harnesses/generic/
     └── 02-egm-goldfish-audit.md       Phase 1b — BLIND, read carefully
 ```
 
-Prompts for Phases 2–4 land here when their meta-skills ship.
-
 ## Phase invocation order
 
 Do not skip. Do not reorder. The Navigator advances the flow.
@@ -58,12 +56,19 @@ Phase 1a → prompts/01-sdd-spec-writer.md
          ↓ (produces specs/<US-ID>.spec.md)
 Phase 1b → prompts/02-egm-goldfish-audit.md   ⚠️ must be BLIND
          ↓ (produces specs/<US-ID>.audit.<N>.md)
-Phase 2  → (planned: 03-tdd-cycle)
+Phase 2  → .meta-skills/03-tdd-cycle.md         (paste directly)
          ↓
-Phase 3  → (planned: 04-odd-vertical-slice)
+Phase 3  → .meta-skills/04-odd-vertical-slice.md  (paste directly)
          ↓
-Phase 4  → (planned: 05-drift-control)
+Phase 4  → .meta-skills/05-drift-control.md       (paste directly)
 ```
+
+**Phases 2–4 have no dedicated dispatch prompt yet.** Their meta-skills are
+shipped and usable today — paste `.meta-skills/<file>.md` directly and
+follow the phase's frontmatter-declared inputs. Dedicated generic-harness
+prompts for these phases are tracked but not shipped. If you want
+per-phase invocations without the two-paste pattern, use
+[`../opencode/`](../opencode/) instead.
 
 ## The Goldfish exception: it must be blind
 
