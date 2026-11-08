@@ -34,7 +34,7 @@ max_lines: 100
 
 | Test ID | Covered AC | Type | Description | File (Phase 2) | Status |
 |---------|------------|------|-------------|----------------|--------|
-| T-1 | AC-1 | unit | <one line, from spec Section 4> | `<path/test_file>` | `<RED | GREEN>` |
+| T-1 | AC-1 | unit | <one line, from spec Section 4> | `<path/test_file>` | `<RED \| GREEN>` |
 | T-2 | AC-2 | integration | <one line> | `<path>` | `<status>` |
 | T-3 | AC-3 | e2e | <one line> | `<path>` | `<status>` |
 | ... | ... | ... | ... | ... | ... |
@@ -64,7 +64,7 @@ max_lines: 100
 
 | Observation | Covered by E2E test | Navigator observed? | Date |
 |-------------|---------------------|---------------------|------|
-| <behavior from spec Section 6> | `T-e2e-<i>` | `<yes | no | deferred>` | `<YYYY-MM-DD or —>` |
+| <behavior from spec Section 6> | `T-e2e-<i>` | `<yes \| no \| deferred>` | `<YYYY-MM-DD or —>` |
 
 **Observation gate result:** `<approved | deferred | blocked | N/A>`
 
