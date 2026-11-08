@@ -31,7 +31,7 @@ by **responsibility in the methodology**, not by file type.
 
 ### Dependency relationships
 
-```text
+```
 ┌───────────────────────┐
 │   Core methodology    │
 │   (.meta-skills/)     │

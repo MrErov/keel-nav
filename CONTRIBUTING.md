@@ -115,7 +115,7 @@ re-implement the bridge.
 Every PR that adds or changes a meta-skill must include a short **token
 accounting** block in the description:
 
-```text
+```
 Token impact:
 Before: <X>k (estimated)
 After: <Y>k (estimated)
@@ -131,7 +131,7 @@ Unjustified positive-delta PRs are closed.
 
 ## 6. PR checklist (paste into your PR description)
 
-```text
+```
 □ Linked issue is labeled accepted-for-pr
 □ Does not add a new phase to the flow
 □ Does not require an SDK, runtime, or proprietary format

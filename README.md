@@ -44,7 +44,7 @@ Five phases. Each phase is a single meta-skill in pure Markdown. **Human command
 | 3 | **ODD & Vertical Slices** | DB → API → UI, one slice at a time | `04-odd-vertical-slice.md` |
 | 4 | **Drift Control** | Final audit against the original spec | `05-drift-control.md` |
 
-```text
+```
 ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
 │  Phase 0    │──▶│  Phase 1    │──▶│  Phase 2    │──▶│  Phase 3    │──▶│  Phase 4    │
 │  Context    │   │  SDD +      │   │  Strict     │   │  ODD        │   │  Drift      │
@@ -87,7 +87,7 @@ behavior.
 
 ## Repository structure
 
-```text
+```
 keel-nav/
 ├── .meta-skills/                    # Agnostic core (pure Markdown)
 │   ├── 00-context-bootstrap.md      ✅ v0.1.0

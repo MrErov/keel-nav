@@ -54,19 +54,19 @@ max_lines: 120
 
 ### 3.1 Input contract
 
-```text
+```
 <VERB> <path/signature>
 ```
 
 Payload / parameters:
 
-```text
+```
 <field>: <type> — <validation>
 ```
 
 Responses:
 
-```text
+```
 2xx: <shape>
 4xx: <shape>
 ```

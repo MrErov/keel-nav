@@ -222,7 +222,7 @@ If a blocking gate fails → do not mark the phase complete; report the failure.
 
 User (in OpenCode):
 
-```text
+```
 Run .meta-skills/00-context-bootstrap.md on this repo.
 Scope: src/billing/ only.
 ```
@@ -235,7 +235,7 @@ dependency-map, and risk-register.
 
 On close, the AI must emit a 3-line message:
 
-```text
+```
 ✅ Phase 0 complete. Contexts: <N>. Risks: <M>.
 📁 Artifacts: docs/context/ (N+3 files).
 ➡️  Next: 01-sdd-spec-writer. Requires a User Story from the Navigator.

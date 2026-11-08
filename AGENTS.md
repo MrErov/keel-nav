@@ -113,7 +113,7 @@ The Navigator's phase invocation is the signal.
 Each meta-skill declares its estimated token cost. If your execution exceeds
 **150% of the declared budget**, stop and report:
 
-```text
+```
 ⚠️ Token budget overrun in phase <N>. Declared: <X>k. Used: <Y>k.
 Reason: <one line>. Options: (a) split scope, (b) accept overrun, (c) abort.
 ```
@@ -146,7 +146,7 @@ When you encounter any of the following, **stop and escalate to the Navigator**:
 
 Format for escalation:
 
-```text
+```
 🛑 Escalation — Phase <N>
 Gate/rule at risk: <G-x / rule x.y>
 Reason: <one line>

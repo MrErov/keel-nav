@@ -77,7 +77,7 @@ You are **forbidden** to:
 
 **If `context_doc` does not exist**, stop:
 
-```text
+```
 🛑 Escalation — Phase 1
 Rule at risk: requires: [00-context-bootstrap]
 Reason: docs/context/<name>.md not found for context "<name>".
@@ -102,7 +102,7 @@ Before opening the template, answer these internally. Any "no" is a hard stop.
 
 **If any check fails**, stop and emit:
 
-```text
+```
 🛑 Escalation — Phase 1
 Check failed: <item>
 Reason: <one line>
@@ -170,7 +170,7 @@ not touch any other file.
 
 Emit this exact 3-line message:
 
-```text
+```
 ✅ Spec written: specs/<US-ID>.spec.md (<N> ACs, <M> tests, <L> lines).
 📁 Gate: all Section 7 checks passing.
 ➡️ Next: 02-egm-goldfish-audit. Requires a blind sub-agent (no chat memory).
@@ -192,7 +192,7 @@ A story is too big for one spec if **any** of these is true:
 In any of these cases, **stop before filling the template** and propose a
 split to the Navigator:
 
-```text
+```
 ⚠️ Story too big for one spec.
 Signals: <which heuristics fired>
 Proposed split:

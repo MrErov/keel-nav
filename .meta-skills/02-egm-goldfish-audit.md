@@ -142,7 +142,7 @@ You are **forbidden** to:
 
 **If `spec_path` or `context_doc` is missing**, stop:
 
-```text
+```
 🛑 Escalation — Phase 1b
 Missing input: <path>
 Reason: Goldfish cannot audit without the spec and its bounded context.
@@ -233,7 +233,7 @@ missed a finding**. Re-read Step 2.
 
 If `specs/` does not exist (should not happen — Skill 01 creates it), stop:
 
-```text
+```
 🛑 Escalation — Phase 1b
 Missing directory: specs/
 Reason: Skill 01 should have created it. State is inconsistent.
@@ -349,7 +349,7 @@ escalate to the Navigator.
 
 **Navigator (in OpenCode, fresh session):**
 
-```text
+```
 You are auditing a spec as a blind Goldfish. Load and follow
 .meta-skills/02-egm-goldfish-audit.md.
 
@@ -385,7 +385,7 @@ audit round: 1
 
 On audited:
 
-```text
+```
 ✅ Goldfish audit passed: specs/<US-ID>.audit.<N>.md (0 blocking, <M> warning, <K> info).
 📁 Spec status: audited. Metadata updated.
 ➡️  Next: Navigator promotes spec to `approved`, then 03-tdd-cycle.
@@ -393,7 +393,7 @@ On audited:
 
 On rejected:
 
-```text
+```
 🛑 Goldfish audit rejected: specs/<US-ID>.audit.<N>.md (<N> blocking, <M> warning, <K> info).
 📁 Spec status: draft (unchanged). Blocking findings must be resolved.
 ➡️  Next: Navigator routes spec back to 01-sdd-spec-writer for fixes.
