@@ -479,8 +479,3 @@ not pretend observation happened.
 - **Observation checklist persistence:** currently emitted as chat text.
   A future `templates/observation-report.template.md` could make the
   Navigator's observations durable. Not in this turn.
-- **`status: observed` in `spec.template.md`:** the template's Section 8
-  comment lists `draft | audited | approved | implemented`. Adding
-  `observed` is a one-line patch to `templates/spec.template.md` Section 8.
-  Deferred to the next turn (the `test-plan.template.md` commit can bundle
-  it) to keep this commit scoped to a single artifact.
