@@ -7,133 +7,133 @@ estimated_tokens_to_fill: 2000-4000
 max_lines: 120
 ---
 
-# SPEC: `<US-ID>` — <título corto de la User Story>
+# SPEC: `<US-ID>` — <short User Story title>
 
-> **Cómo usar esta plantilla:** rellena solo las secciones marcadas como
-> obligatorias (`[M]`). Las secciones marcadas como opcionales (`[O]`) se
-> eliminan si no aplican. No añadas secciones nuevas. No superes el límite de
-> líneas por sección. Si una sección obligatoria no se puede rellenar, es una
-> señal de que la User Story no está lista: detente y devuélvela al Navigator.
+> **How to use this template:** fill in only the sections marked as mandatory
+> (`[M]`). Sections marked as optional (`[O]`) are deleted if they do not
+> apply. Do not add new sections. Do not exceed the per-section line limits.
+> If a mandatory section cannot be filled, it is a signal that the User Story
+> is not ready: stop and return it to the Navigator.
 
 ---
 
 ## 1. [M] User Story
 
-**Como** `<rol>`,
-**quiero** `<capacidad>`,
-**para** <beneficio de negocio>.
+**As a** `<role>`,
+**I want** `<capability>`,
+**so that** <business benefit>.
 
-**Contexto delimitado:** `<nombre-del-contexto>` (referencia: `docs/context/<nombre>.md`)
+**Bounded context:** `<context-name>` (reference: `docs/context/<name>.md`)
 
-**Fuera de alcance (explícito):**
-- <qué NO entra en esta story, para evitar scope creep>
+**Explicit out of scope:**
+- <what does NOT belong to this story, to prevent scope creep>
 
-> Límite: 10 líneas. Si necesitas más, la story es demasiado grande: divídela.
+> Limit: 10 lines. If you need more, the story is too big: split it.
 
 ---
 
-## 2. [M] Criterios de aceptación
+## 2. [M] Acceptance Criteria
 
-| ID | Dado (contexto) | Cuando (acción) | Entonces (resultado observable) |
-|----|-----------------|-----------------|----------------------------------|
+| ID | Given (context) | When (action) | Then (observable result) |
+|----|-----------------|---------------|--------------------------|
 | AC-1 | ... | ... | ... |
 | AC-2 | ... | ... | ... |
 | AC-3 | ... | ... | ... |
 
-> Límite: 3–7 criterios. Cada criterio debe ser **verificable por un test**.
-> Si un criterio no se puede traducir a un test, no es un criterio: es una
-> aspiración. Reescríbelo o elimínalo.
+> Limit: 3–7 criteria. Every criterion must be **verifiable by a test**.
+> If a criterion cannot be translated into a test, it is not a criterion:
+> it is an aspiration. Rewrite it or delete it.
 
 ---
 
-## 3. [M] Contratos de interfaz
+## 3. [M] Interface Contracts
 
-> Solo si la story expone o consume una interfaz (API, función pública, evento,
-> componente UI). Si no aplica, escribe "N/A — historia interna" y pasa a la
-> sección 4.
+> Only if the story exposes or consumes an interface (API, public function,
+> event, UI component). If not applicable, write "N/A — internal story" and
+> move to Section 4.
 
-### 3.1 Contrato de entrada
-
-```text
-<verbo> <ruta/firma>
-```
-
-Payload / parámetros:
+### 3.1 Input contract
 
 ```text
-<campo>: <tipo> — <validación>
+<VERB> <path/signature>
 ```
 
-Respuestas:
+Payload / parameters:
 
 ```text
-2xx: <forma>
-4xx: <forma>
+<field>: <type> — <validation>
 ```
 
-### 3.2 Contrato de salida / efectos secundarios
+Responses:
 
-- <qué se persiste, qué se emite, qué se notifica>
+```text
+2xx: <shape>
+4xx: <shape>
+```
 
-> Límite: 15 líneas. Si el contrato necesita más, la story está mezclando
-> demasiadas responsabilidades. Divide.
+### 3.2 Output contract / side effects
+
+- <what is persisted, what is emitted, what is notified>
+
+> Limit: 15 lines. If the contract needs more, the story is mixing too many
+> responsibilities. Split it.
 
 ---
 
-## 4. [M] Plan de tests (TDD seed)
+## 4. [M] Test Plan (TDD seed)
 
-> Esta sección es el **contrato de alcance** para la Fase 2. La IA no escribirá
-> código que no esté cubierto aquí.
+> This section is the **scope contract** for Phase 2. The AI will not write
+> code that is not covered here.
 
-| Test ID | AC cubierto | Tipo | Descripción breve |
-|---------|-------------|------|-------------------|
+| Test ID | Covered AC | Type | Short description |
+|---------|------------|------|-------------------|
 | T-1 | AC-1 | unit | ... |
 | T-2 | AC-2 | integration | ... |
 | T-3 | AC-3 | e2e | ... |
 
-**Estado inicial esperado:** todos en **RED** (`FAIL`).
+**Expected initial state:** all **RED** (`FAIL`).
 
-> Límite: 5–10 tests. Si necesitas más, la story es demasiado grande.
-
----
-
-## 5. [O] Dependencias y riesgos
-
-- **Depende de:** <otras stories, contextos, servicios externos>
-- **Riesgo principal:** <qué podría hacer fallar esta story>
-- **Mitigación:** <cómo se reduce ese riesgo>
-
-> Si no aplica, elimina esta sección completa.
+> Limit: 5–10 tests. If you need more, the story is too big.
 
 ---
 
-## 6. [O] Notas de observación (ODD)
+## 5. [O] Dependencies and Risks
 
-> Solo para stories con componente visual o de comportamiento observable en
-> runtime. Se rellena en Fase 3, no en Fase 1.
+- **Depends on:** <other stories, contexts, external services>
+- **Main risk:** <what could make this story fail>
+- **Mitigation:** <how that risk is reduced>
 
-- <qué debe observar el Navigator para validar la rebanada vertical>
-
----
-
-## 7. [M] Gate de salida (autochequeo antes de enviar a Goldfish Audit)
-
-| Gate | Criterio | Estado |
-|------|----------|--------|
-| G1 | User Story en formato Como/Quiero/Para | [ ] |
-| G2 | Fuera de alcance explícito declarado | [ ] |
-| G3 | 3–7 criterios de aceptación verificables | [ ] |
-| G4 | Cada AC tiene al menos un test en el plan | [ ] |
-| G5 | Contratos de interfaz completos o "N/A" justificado | [ ] |
-| G6 | Longitud total ≤ 120 líneas | [ ] |
-| G7 | No se añadieron secciones fuera de esta plantilla | [ ] |
-
-**Si algún gate falla, la spec NO se envía a Goldfish Audit.**
-Vuelve al Navigator con el gate fallido y la razón.
+> If not applicable, delete this entire section.
 
 ---
 
-## 8. [M] Metadatos de trazabilidad
+## 6. [O] Observation Notes (ODD)
+
+> Only for stories with a visual component or runtime-observable behavior.
+> Filled in Phase 3, not Phase 1.
+
+- <what the Navigator must observe to validate the vertical slice>
+
+---
+
+## 7. [M] Exit Gate (self-check before Goldfish Audit)
+
+| Gate | Criterion | Status |
+|------|-----------|--------|
+| G1 | User Story in As-a/I-want/So-that format | [ ] |
+| G2 | Explicit out-of-scope list declared | [ ] |
+| G3 | 3–7 verifiable acceptance criteria | [ ] |
+| G4 | Every AC has at least one test in the plan | [ ] |
+| G5 | Interface contracts complete or "N/A" justified | [ ] |
+| G6 | Total length ≤ 120 lines | [ ] |
+| G7 | No sections added outside this template | [ ] |
+
+**If any gate fails, the spec is NOT sent to Goldfish Audit.**
+Return to the Navigator with the failing gate and the reason.
+
+---
+
+## 8. [M] Traceability Metadata
 
 ```yaml
 us_id: <US-ID>
@@ -141,6 +141,6 @@ spec_version: 0.1.0
 created_by: 01-sdd-spec-writer
 created_at: <YYYY-MM-DD>
 status: draft | audited | approved | implemented
-goldfish_audit: <ruta al audit.md o "pending">
-drift_report: <ruta al drift-report.md o "pending">
+goldfish_audit: <path to audit.md or "pending">
+drift_report: <path to drift-report.md or "pending">
 ```

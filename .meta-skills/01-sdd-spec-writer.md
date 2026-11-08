@@ -117,21 +117,21 @@ Never fill the template anyway "to be helpful". That is vibe coding
 Copy `templates/spec.template.md` verbatim into `specs/<US-ID>.spec.md`.
 Fill **in place**. Do not reorder sections. Do not add sections. Fill:
 
-- **Section 1 [M] User Story** — Como/Quiero/Para in the Navigator's words,
+- **Section 1 [M] User Story** — As-a / I-want / So-that in the Navigator's words,
   plus an explicit out-of-scope list. ≤10 lines.
-- **Section 2 [M] Criterios de aceptación** — 3–7 Given/When/Then rows.
+- **Section 2 [M] Acceptance Criteria** — 3–7 Given/When/Then rows.
   Each row must be **verifiable by a single test**. If you cannot describe
   the test in one sentence, the AC is not an AC — rewrite it or escalate.
-- **Section 3 [M] Contratos de interfaz** — input contract (verb, path,
+- **Section 3 [M] Interface Contracts** — input contract (verb, path,
   payload, responses) and output contract (side effects, persistence,
   emissions). If the story is internal, write `N/A — internal story` and
   justify in one line.
-- **Section 4 [M] Plan de tests (TDD seed)** — 5–10 rows. One test per AC
+- **Section 4 [M] Test Plan (TDD seed)** — 5–10 rows. One test per AC
   minimum. Each test names the AC it covers and its type (unit /
   integration / e2e). All tests start **RED**.
-- **Section 7 [M] Gate de salida** — fill the checklist as the
+- **Section 7 [M] Exit Gate** — fill the checklist as the
   self-check output of Step 4. Do **not** pre-check all boxes.
-- **Section 8 [M] Metadatos de trazabilidad** — `us_id`, `spec_version:
+- **Section 8 [M] Traceability Metadata** — `us_id`, `spec_version:
   0.1.0`, `created_by: 01-sdd-spec-writer`, `created_at`, `status: draft`,
   `goldfish_audit: pending`, `drift_report: pending`.
 
@@ -146,7 +146,7 @@ Open the file you just wrote. Walk through Section 7's checklist honestly.
 
 | Gate | Criterion | Blocking |
 |------|-----------|----------|
-| G1 | Section 1 has Como/Quiero/Para format | yes |
+| G1 | Section 1 has As-a/I-want/So-that format | yes |
 | G2 | Out-of-scope list is non-empty | yes |
 | G3 | 3–7 acceptance criteria, all testable | yes |
 | G4 | Every AC has ≥1 test in Section 4 | yes |
