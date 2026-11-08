@@ -91,20 +91,20 @@ behavior.
 keel-nav/
 ├── .meta-skills/                    # Agnostic core (pure Markdown)
 │   ├── 00-context-bootstrap.md      ✅ v0.1.0
-│   ├── 01-sdd-spec-writer.md        🚧 planned (v0.1.0)
-│   ├── 02-egm-goldfish-audit.md     🚧 planned (v0.1.0)
-│   ├── 03-tdd-cycle.md              🚧 planned (v0.2.0)
-│   ├── 04-odd-vertical-slice.md     🚧 planned (v0.2.0)
-│   └── 05-drift-control.md          🚧 planned (v0.2.0)
+│   ├── 01-sdd-spec-writer.md        ✅ v0.1.0
+│   ├── 02-egm-goldfish-audit.md     ✅ v0.1.0
+│   ├── 03-tdd-cycle.md              ✅ v0.1.0
+│   ├── 04-odd-vertical-slice.md     ✅ v0.1.0
+│   └── 05-drift-control.md          ✅ v0.1.0
 ├── templates/                       # Artifacts produced by the skills
 │   ├── spec.template.md             ✅ v0.1.0
-│   ├── test-plan.template.md        🚧 planned (v0.1.0)
-│   └── drift-report.template.md     🚧 planned (v0.2.0)
+│   ├── test-plan.template.md        ✅ v0.1.0
+│   └── drift-report.template.md     ✅ v0.1.0
 ├── harnesses/                       # Per-tool adapters (~50 lines each)
-│   ├── opencode/                    🚧 planned (v0.1.0)
-│   ├── claude-code/                 🚧 planned (v0.1.0)
-│   ├── cursor/                      🚧 planned (v0.1.0)
-│   └── generic/                     🚧 planned (v0.1.0)
+│   ├── opencode/                    🚧 planned (v0.2.0)
+│   ├── claude-code/                 🚧 planned (v0.2.0)
+│   ├── cursor/                      🚧 planned (v0.2.0)
+│   └── generic/                     ✅ v0.1.0
 ├── docs/context/                    # Phase 0 self-applied (Elephant Memory)
 │   └── 00-overview.md               ✅ Phase 0 baseline
 ├── AGENTS.md                        ✅ Canonical AI behavioral contract
@@ -114,10 +114,11 @@ keel-nav/
 └── README.md                        ✅
 ```
 
-Legend: ✅ = shipped · 🚧 = planned. The version in parentheses
-is the release where the file lands. Files marked 🚧 are referenced
-by the methodology but not yet present in the repo — do not link to
-them until they ship.
+> **Legend:** ✅ = shipped in the current release · 🚧 = planned. The
+> version in parentheses is the release where the file landed (`✅`) or
+> is scheduled to land (`🚧`). Files marked 🚧 are referenced by the
+> methodology but not yet present in the repo — do not link to them until
+> they ship.
 
 ## Quick Start
 
