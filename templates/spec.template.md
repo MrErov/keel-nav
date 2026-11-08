@@ -143,7 +143,7 @@ us_id: <US-ID>
 spec_version: 0.1.0
 created_by: 01-sdd-spec-writer
 created_at: <YYYY-MM-DD>
-status: draft | audited | approved | implemented | observed
+status: draft | audited | approved | implemented | observed | certified
 goldfish_audit: <path to audit.md or "pending">
 drift_report: <path to drift-report.md or "pending">
 ```
