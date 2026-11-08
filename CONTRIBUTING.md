@@ -14,7 +14,7 @@ document in full. It is short on purpose.
 |---------|-----------------|
 | A new meta-skill that fills a gap in the 5-phase flow (0–4) | A new phase. The flow has 5 phases (0–4); changes to the flow itself need a separate RFC. |
 | A template refinement that reduces the fields a spec needs | A richer template with more fields. Keel Nav's value is subtraction. |
-| A new harness adapter (~50 lines, thin shim) | A harness that "requires" a plugin, runtime, or SDK. |
+| A new harness adapter (thin entry point; see §4 for the two shapes) | A harness that "requires" a plugin, runtime, or SDK. |
 | A token-budget refinement with measured data | A token-budget claim without measurement. |
 | Clarifications to existing meta-skills | Restructuring an existing meta-skill's protocol. |
 
