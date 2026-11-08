@@ -101,7 +101,7 @@ keel-nav/
 │   ├── test-plan.template.md        ✅ v0.1.0
 │   └── drift-report.template.md     ✅ v0.1.0
 ├── harnesses/                       # Per-tool adapters (~50 lines each)
-│   ├── opencode/                    🚧 planned (v0.2.0)
+│   ├── opencode/                    ✅ v0.2.0
 │   ├── claude-code/                 🚧 planned (v0.2.0)
 │   ├── cursor/                      🚧 planned (v0.2.0)
 │   └── generic/                     ✅ v0.1.0
@@ -127,11 +127,14 @@ keel-nav/
 git clone https://github.com/<org>/keel-nav.git
 cd keel-nav
 
-# 2. Copy the meta-skills into your harness
-cp -r .meta-skills/ harnesses/opencode/   # or claude-code/, cursor/, generic/
+# 2. Pick a harness and follow its README.
+#    Example: OpenCode
+mkdir -p /path/to/your-project/.opencode/skills
+cp -r harnesses/opencode/skills/* /path/to/your-project/.opencode/skills/
+cp -r .meta-skills /path/to/your-project/
 
 # 3. In your editor/CLI, invoke Phase 0 on your target repo:
-#    "Run .meta-skills/00-context-bootstrap.md on this repository"
+#    /context-bootstrap
 ```
 
 No installer. No `npm i`. Just text your LLM can read.
@@ -140,7 +143,7 @@ No installer. No `npm i`. Just text your LLM can read.
 
 | Harness | Mechanism | Location |
 |---------|-----------|----------|
-| OpenCode | Native skills | `harnesses/opencode/.opencode/skills/` |
+| OpenCode | Native skills | `harnesses/opencode/skills/` |
 | Claude Code | `CLAUDE.md` + directives | `harnesses/claude-code/CLAUDE.md` |
 | Cursor | `.cursorrules` | `harnesses/cursor/.cursorrules` |
 | Copilot CLI / Gemini CLI / Web LLMs | Pasted prompt | `harnesses/generic/prompts/*.md` |
