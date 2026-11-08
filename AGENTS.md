@@ -12,8 +12,11 @@
 
 `keel-nav` is **not a software project**. It is a **methodology encoded in Markdown**:
 
-- A set of meta-skills (`.meta-skills/`) that define a 6-phase flow for
-  AI-assisted engineering: **SDD + TDD + ODD + EGM (Drift Control)**.
+- A set of meta-skills (`.meta-skills/`) that define a **5-phase flow
+  (Phases 0–4)** for AI-assisted engineering: **SDD + TDD + ODD + EGM
+  (Drift Control)**. Phase 1 is implemented by two skills
+  (`01-sdd-spec-writer` + `02-egm-goldfish-audit`); the other phases
+  map to one skill each.
 - Universal templates (`templates/`) that the meta-skills produce.
 - Thin per-harness adapters (`harnesses/`) that wire the methodology into
   OpenCode, Claude Code, Cursor, DeepSeek Harness, and generic CLIs.

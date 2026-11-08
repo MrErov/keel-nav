@@ -23,7 +23,7 @@ by **responsibility in the methodology**, not by file type.
 
 | # | Context | Path | Purpose (one sentence) |
 |---|---------|------|------------------------|
-| 1 | **Core methodology** | `.meta-skills/` | The 6-phase flow, encoded as portable Markdown. The product. |
+| 1 | **Core methodology** | `.meta-skills/` | The 5-phase flow (0–4), encoded as portable Markdown. The product. |
 | 2 | **Artifact templates** | `templates/` | Universal, fillable artifacts the flow produces (specs, test plans, drift reports). |
 | 3 | **Harness adapters** | `harnesses/` | Thin shims that wire the methodology into each CLI/IDE. ~50 lines each. |
 | 4 | **Context documentation** | `docs/context/` | Elephant Memory produced by Phase 0. Self-documenting by design. |

@@ -12,7 +12,7 @@ document in full. It is short on purpose.
 
 | Belongs | Does not belong |
 |---------|-----------------|
-| A new meta-skill that fills a gap in the 6-phase flow | A new phase. The flow has 6 phases; changes to the flow itself need a separate RFC. |
+| A new meta-skill that fills a gap in the 5-phase flow (0–4) | A new phase. The flow has 5 phases (0–4); changes to the flow itself need a separate RFC. |
 | A template refinement that reduces the fields a spec needs | A richer template with more fields. Keel Nav's value is subtraction. |
 | A new harness adapter (~50 lines, thin shim) | A harness that "requires" a plugin, runtime, or SDK. |
 | A token-budget refinement with measured data | A token-budget claim without measurement. |
@@ -30,7 +30,7 @@ The meta-skills are the product. Changing one is a **methodology change**, not
 an editorial one. Follow this protocol:
 
 1. **Open an issue first.** Describe:
-   - The phase the change affects (0–5).
+   - The phase the change affects (0–4).
    - The concrete pain point (with a real example, not hypothetical).
    - The minimal change you propose.
    - The effect on token budget (does it raise it? by how much?).
