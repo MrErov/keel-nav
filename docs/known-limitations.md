@@ -44,9 +44,13 @@
 The following are **not** in this list because they are deliberate
 non-goals, not limitations:
 
-- **No CI.** The repo lives in Markdown. CI would be an automated linter
-  for frontmatter, fence balance, and links; tracked separately, but not
-  a gap in the methodology itself.
+- **No CI.** The repo lives in Markdown. A linter for frontmatter, fence
+  balance, and links would be cheap to add, and it is deferred — not
+  rejected — pending a trigger. **Triggers for adding it:** an external
+  PR appears, or a mechanical defect (broken fence, bad YAML quote, broken
+  link) reaches `main` undetected, or a second contributor joins, or the
+  repo grows past ~15 meta-skills. Until a trigger fires, the Helmsman's
+  manual check is the CI.
 - **No `README.es.md`.** Single-language repo. Duplicating README doubles
   maintenance without adding methodological value.
 - **No prompts for Phases 2–4 in `harnesses/generic/`.** The two-paste

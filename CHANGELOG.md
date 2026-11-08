@@ -45,6 +45,14 @@ with the understanding that:
   containing `': '` must be quoted). References the YAML guide comment
   in `templates/spec.template.md` §8.
 
+### Deferred
+
+- **Priority 3 (CI).** Declined as a speculative preventive. The manual
+  mechanical check has 20+ turns of clean data; the defects that mattered
+  in this project (semantic spec/audit mismatches) are not caught by CI
+  anyway. Deferred pending one of the documented triggers in
+  `docs/known-limitations.md`.
+
 ## [0.2.0-alpha] - 2026-11-08
 
 ### Added — Harness adapters
