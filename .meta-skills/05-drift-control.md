@@ -8,7 +8,7 @@ description: Final certification. Compare the implemented code against the
 compatible_with: [opencode, claude-code, cursor, copilot-cli, gemini-cli, generic]
 inputs:
   - spec_path: "specs/<US-ID>.spec.md (status must be implemented or observed)"
-  - audit_path: "specs/<US-ID>.audit.<N>.md (verdict audited, possibly with overrides)"
+  - audit_path: "specs/<US-ID>.audit.<N>.md (effective_verdict: audited, possibly via overrides)"
   - test_plan_path: "test plan derived from spec Section 4"
   - code_scope: "git-diff base=<sha> OR files=<explicit list>"
   - observation_report: "spec Section 6 (required if status=observed)"
@@ -101,7 +101,7 @@ You are **forbidden** to:
 | Check | Required | If fails |
 |-------|----------|----------|
 | `spec.status` ∈ {`implemented`, `observed`} | yes | Escalate (Phase 2 or 3 not done). |
-| Audit verdict is `audited` OR every blocking finding has an override | yes | Escalate to Navigator. |
+| Audit `effective_verdict:` is `audited` | yes | Escalate to Navigator. |
 | `spec.goldfish_audit` points to an existing file | yes | Escalate. |
 | If `spec.status = observed`, Section 6 is non-empty | yes | Escalate (inconsistent state). |
 | `code_scope` is provided (git-diff or files) | yes | Ask Navigator in Step 2. |
@@ -283,11 +283,10 @@ Navigator's decision.
 
 - In the drift report, §8 (`## Navigator overrides`). Populated by the
   Navigator, not by the Drift Auditor.
-- In audit reports (Skill 02), the same section structure applies. **This is
-  a known debt:** Skill 02's current template does not yet have a formal
-  `## Navigator overrides` section. It will be added in a follow-up patch.
-  Until then, audit-report overrides are recorded as an addendum by the
-  Navigator.
+- In audit reports (Skill 02), §8 (`## Navigator overrides`), with the
+  same structure. There, an override also sets `effective_verdict:` to
+  `audited` and lets the Navigator flip the spec's `status:` from `draft`
+  to `audited`. The Goldfish's `verdict:` stays immutable.
 
 **What an override must contain:**
 
@@ -474,10 +473,6 @@ reruns Phase 4.
 
 ## Known gaps (documented debt)
 
-- **Skill 02's `## Navigator overrides` formalization:** the audit-report
-  template in `02-egm-goldfish-audit.md` does not yet have a formal
-  `## Navigator overrides` section. Until patched, audit overrides are
-  recorded as a Navigator addendum. Tracked as a follow-up commit.
 - **Dead code detection:** this skill finds unjustified files, not unused
   functions within justified files. A future enhancement could leverage
   per-language linters. Out of scope for v0.1.0.

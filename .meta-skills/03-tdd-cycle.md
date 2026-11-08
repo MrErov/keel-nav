@@ -9,7 +9,7 @@ description: Execute a strict Red-Green-Refactor cycle against an audited spec.
 compatible_with: [opencode, claude-code, cursor, copilot-cli, gemini-cli, generic]
 inputs:
   - spec_path: path to specs/<US-ID>.spec.md (status must be audited or approved)
-  - audit_path: "path to specs/<US-ID>.audit.<N>.md (must have verdict: audited)"
+  - audit_path: "path to specs/<US-ID>.audit.<N>.md (effective_verdict: audited, possibly via overrides)"
 outputs:
   - test files at the paths declared by the spec's Section 4 (or derived)
   - production code at the paths declared by the spec's Section 3
@@ -92,7 +92,7 @@ You are **forbidden** to:
 |-------|----------|----------|
 | `spec.status` ∈ {`audited`, `approved`} | yes | Escalate (Step 1 escalation). |
 | `spec.goldfish_audit` points to an existing file | yes | Escalate. |
-| Audit verdict is `audited` (no blocking findings) | yes | Escalate. |
+| Audit `effective_verdict:` is `audited` (fall back to `verdict:` if the field is absent) | yes | Escalate. |
 
 **Escalation message:**
 

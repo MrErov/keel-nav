@@ -219,6 +219,18 @@ not audited harshly enough**. Re-read Step 2.
 If your verdict is `audited` but you feel uneasy, **you have probably
 missed a finding**. Re-read Step 2.
 
+**Effective verdict.** The Goldfish writes `effective_verdict:` equal to
+`verdict:`. After the Goldfish finishes, the Navigator may add entries to
+§8 (`## Navigator overrides`). If §8 covers **all** blocking findings,
+the Navigator may set `effective_verdict: audited` in the frontmatter and
+flip the spec's `status:` from `draft` to `audited`. This is the only
+field the Navigator may change in a Goldfish-produced report. The
+`verdict:` field is immutable — it records what the Goldfish actually
+assessed.
+
+Skill 03 gates on `effective_verdict:` (falling back to `verdict:` if the
+field is absent in older reports).
+
 ### Step 5 — Write the audit report and stamp the spec metadata (cost: ~200 tokens)
 
 1. **Write `specs/<US-ID>.audit.<N>.md`** using the audit template below.
@@ -230,6 +242,12 @@ missed a finding**. Re-read Step 2.
    not the contracts, not the other metadata fields, not even a typo. If
    you notice a typo, put it in the audit report as INFO. The spec writer
    fixes it, not you.
+
+**Note on overrides.** The Goldfish does **not** apply overrides. If the
+Navigator later adds entries to §8 and sets `effective_verdict: audited`,
+the Navigator is also responsible for flipping the spec's `status:` from
+`draft` to `audited`. The Goldfish's job ends after writing the report
+and setting `status:` per `verdict:`.
 
 If `specs/` does not exist (should not happen — Skill 01 creates it), stop:
 
@@ -249,6 +267,7 @@ version: 0.1.0
 spec_id: <US-ID>
 spec_version_audited: <from spec Section 8>
 verdict: audited | rejected
+effective_verdict: audited | rejected
 findings_blocking: <N>
 findings_warning: <M>
 findings_info: <K>
@@ -289,6 +308,31 @@ audit_round: <N>
 | I1 | <CATEGORY> | <Section + line/AC/Test> | <one sentence> |
 
 > If zero info, write: "None."
+
+## 8. Navigator overrides
+
+> A Navigator override records that the Navigator has **accepted a specific
+> blocking finding as known, acceptable drift**. An override does **not**
+> delete the finding — the finding stays in "Blocking findings" above for
+> the historical record. The override changes `effective_verdict`, not the
+> evidence.
+
+| # | Overrides finding | Navigator | Date | Justification | Scope |
+|---|-------------------|-----------|------|---------------|-------|
+| O1 | `B1` | `<name>` | `<YYYY-MM-DD>` | <one sentence> | `<what is accepted: this file, this AC, permanently, until X>` |
+
+> If zero: write "None." Do not delete the section — its emptiness is
+> meaningful (it certifies that no override was needed).
+>
+> **Invariant:** `effective_verdict` may differ from `verdict` **only if**
+> §8 has an override for **every** blocking finding, each with all four of:
+> Navigator, Date, Justification, Scope. If any blocking finding lacks an
+> override, `effective_verdict` must equal `verdict` (`rejected`).
+>
+> **Who writes §8:** the Goldfish leaves it as `None.`. The Navigator may
+> add entries after the Goldfish finishes, and is the only actor allowed
+> to set `effective_verdict: audited`. The `verdict:` field is immutable —
+> it records what the Goldfish actually assessed.
 
 ## Auditor's note (optional)
 
@@ -344,6 +388,9 @@ escalate to the Navigator.
 - ❌ Writing more than 200 lines of audit report.
 - ❌ Producing a second audit file in the same dispatch (each dispatch =
   one audit round).
+- ❌ Setting `effective_verdict: audited` while any blocking finding lacks
+  a §8 override with all four fields (Navigator, Date, Justification,
+  Scope). An override without all four is a wish, not a decision.
 
 ## Invocation example
 
@@ -396,8 +443,11 @@ On rejected:
 ```
 🛑 Goldfish audit rejected: specs/<US-ID>.audit.<N>.md (<N> blocking, <M> warning, <K> info).
 📁 Spec status: draft (unchanged). Blocking findings must be resolved.
-➡️  Next: Navigator routes spec back to 01-sdd-spec-writer for fixes.
-    A new audit round (N+1) is required after fixes.
+➡️  Next: Navigator either (a) routes spec back to 01-sdd-spec-writer
+    for fixes (then a new audit round N+1), or (b) adds a
+    `## Navigator overrides` entry in §8 for **each** blocking finding,
+    sets `effective_verdict: audited`, and flips the spec's `status:`
+    to `audited`.
 ```
 
 ## What the Goldfish does NOT do (and why)

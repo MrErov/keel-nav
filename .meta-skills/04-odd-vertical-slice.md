@@ -9,7 +9,7 @@ description: Wire a TDD-tested spec into a real end-to-end vertical slice
 compatible_with: [opencode, claude-code, cursor, copilot-cli, gemini-cli, generic]
 inputs:
   - spec_path: path to specs/<US-ID>.spec.md (status must be implemented)
-  - audit_path: "path to specs/<US-ID>.audit.<N>.md (verdict: audited)"
+  - audit_path: "path to specs/<US-ID>.audit.<N>.md (effective_verdict: audited, possibly via overrides)"
   - observation_notes: Section 6 of the spec (required to be non-empty)
 outputs:
   - infrastructure/wiring code (DB migrations, API routes, UI components)
@@ -122,7 +122,7 @@ You are **forbidden** to:
 | Check | Required | If fails |
 |-------|----------|----------|
 | `spec.status` is `implemented` | yes | Escalate (Phase 2 not done). |
-| `spec.goldfish_audit` points to a file with `verdict: audited` | yes | Escalate (Phase 1 not done). |
+| `spec.goldfish_audit` points to a file with `effective_verdict: audited` | yes | Escalate (Phase 1 not done). |
 | Section 6 is non-empty and specific | yes | If empty → **skip Phase 3** (see "When to use"). If vague → escalate. |
 | Section 4 tests pass (rerun them) | yes | Escalate (Phase 2 regression). |
 
