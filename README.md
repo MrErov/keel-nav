@@ -201,8 +201,10 @@ Quick summary:
 
 - **Meta-skill changes** require an issue labeled `accepted-for-pr` before
   a PR opens. Unstable meta-skills are worse than no meta-skills.
-- **Harness adapters** are thin shims (~50 lines) that point to
-  `AGENTS.md` and `.meta-skills/` — never forks.
+- **Harness adapters** are thin entry points that point to `AGENTS.md` and
+  `.meta-skills/` — never forks. Two shapes: per-phase shims (≤50 lines
+  each) and persistent directive files (≤250 lines total). Neither embeds
+  the protocol.
 - **No external dependencies** inside `.meta-skills/`. Pure Markdown only.
 - **Every PR** declares its token impact (`before`, `after`, `delta`,
   justification).
