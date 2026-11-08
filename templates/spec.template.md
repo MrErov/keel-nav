@@ -136,11 +136,14 @@ Return to the Navigator with the failing gate and the reason.
 ## 8. [M] Traceability Metadata
 
 ```yaml
+# YAML guide: values containing ': ' must be quoted. Example:
+#   goldfish_audit: 'verdict: audited'
+#   note: 'status: implemented, drift_report: pending'
 us_id: <US-ID>
 spec_version: 0.1.0
 created_by: 01-sdd-spec-writer
 created_at: <YYYY-MM-DD>
-status: draft | audited | approved | implemented
+status: draft | audited | approved | implemented | observed
 goldfish_audit: <path to audit.md or "pending">
 drift_report: <path to drift-report.md or "pending">
 ```
