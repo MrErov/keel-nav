@@ -100,10 +100,10 @@ keel-nav/
 │   ├── spec.template.md             ✅ v0.1.0
 │   ├── test-plan.template.md        ✅ v0.1.0
 │   └── drift-report.template.md     ✅ v0.1.0
-├── harnesses/                       # Per-tool adapters (~50 lines each)
+├── harnesses/                       # Per-tool adapters (thin entry points)
 │   ├── opencode/                    ✅ v0.2.0
-│   ├── claude-code/                 🚧 planned (v0.2.0)
-│   ├── cursor/                      🚧 planned (v0.2.0)
+│   ├── claude-code/                 ✅ v0.2.0
+│   ├── cursor/                      ✅ v0.2.0
 │   └── generic/                     ✅ v0.1.0
 ├── docs/context/                    # Phase 0 self-applied (Elephant Memory)
 │   └── 00-overview.md               ✅ Phase 0 baseline
@@ -114,11 +114,9 @@ keel-nav/
 └── README.md                        ✅
 ```
 
-> **Legend:** ✅ = shipped in the current release · 🚧 = planned. The
-> version in parentheses is the release where the file landed (`✅`) or
-> is scheduled to land (`🚧`). Files marked 🚧 are referenced by the
-> methodology but not yet present in the repo — do not link to them until
-> they ship.
+> **Legend:** ✅ = shipped. The version in parentheses is the release
+> where the file landed. All files listed above are present in the repo;
+> `CHANGELOG.md` and the release tag are the remaining release ceremony.
 
 ## Quick Start
 
@@ -149,12 +147,12 @@ No installer. No `npm i`. Just text your LLM can read.
 | Copilot CLI / Gemini CLI / Web LLMs | Pasted prompt | `harnesses/generic/prompts/*.md` |
 | **DeepSeek Harness** | Via [`dsh-bridges`](https://github.com/deepseek-ai/dsh-bridges) plugin | Auto-detected from `harnesses/*` |
 
-Each harness is a thin adapter (~50 lines), not a fork.
+Each harness is a thin entry point that points at `.meta-skills/`, not a fork.
 
 > **Why DeepSeek appears as a bridge and not a directory:** `dsh-bridges`
 > is a community plugin that reads existing Claude Code / OpenCode / Cursor
 > adapter layouts. Keel Nav doesn't need a `harnesses/deepseek/` directory —
-> the moment the other four adapters ship, `dsh-bridges` picks them up.
+> the other adapters are shipped, and `dsh-bridges` picks them up.
 > That is Keel Nav's agnosticism working as intended.
 
 ## Meta-skill reference
