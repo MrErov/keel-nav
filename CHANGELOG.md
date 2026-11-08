@@ -16,7 +16,34 @@ with the understanding that:
 
 ## [Unreleased]
 
-Nothing yet. See the roadmap in [`README.md`](README.md).
+### Changed
+
+- **Compressed `.meta-skills/02-egm-goldfish-audit.md`** from 490 to
+  300 lines. All 5 protocol steps, G1–G9 gates, and anti-patterns
+  preserved. `effective_verdict` mechanism and `## Navigator overrides`
+  section intact.
+- **Compressed `.meta-skills/05-drift-control.md`** from 491 to 300
+  lines. All 7 protocol steps, G1–G12 gates, and anti-patterns preserved.
+  Navigator overrides mechanism intact. "Known gaps" section moved to
+  `docs/known-limitations.md`.
+
+### Added
+
+- **`docs/known-limitations.md`** — consolidates the 11 live gaps across
+  skills 03, 04, and 05. Each row lists the gap, its workaround, and
+  (implicitly) the release where it might be addressed.
+
+### Removed
+
+- **Skill 04 gap #4** — the `status: observed` bullet was obsolete
+  (`templates/spec.template.md` already includes `observed` in the enum
+  as of v0.2.0-alpha).
+
+### Docs
+
+- **`CONTRIBUTING.md` §3.1** — added a YAML quoting note (values
+  containing `': '` must be quoted). References the YAML guide comment
+  in `templates/spec.template.md` §8.
 
 ## [0.2.0-alpha] - 2026-11-08
 

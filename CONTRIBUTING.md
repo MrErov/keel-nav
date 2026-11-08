@@ -52,6 +52,12 @@ Every meta-skill PR is checked against these. A violation is a blocking review.
 
 - YAML frontmatter is **optional** but, if present, must be standard YAML
   (no anchors, no custom tags, no references to proprietary schemas).
+- **YAML quoting.** String values containing `': '` (colon + space) must be
+  quoted. `note: verdict: audited` parses as a nested key and breaks the
+  frontmatter; `note: 'verdict: audited'` does not. See the YAML guide
+  comment in [`templates/spec.template.md`](templates/spec.template.md) §8
+  for a concrete example. This bug bit us once (skills 03 and 04, v0.1.0);
+  the quoting rule prevents recurrence.
 - Protocol steps are **numbered** and ordered.
 - Quality gates are **explicit** and each is either `blocking` or `warning`.
 - Anti-patterns are **enumerated**. Each anti-pattern names the concrete
