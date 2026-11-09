@@ -106,17 +106,21 @@ examples/todo-api/
 
 ## What you should notice
 
-1. **The rejection is more instructive than the approval.** `audit.1`
-   found a real contradiction between an AC and the contract. Without
-   that finding, Phase 2 would have written tests against an
-   underspecified endpoint.
+1. **The rejection is more instructive than the approval.** `audit.1.md`
+   found a real contradiction between the test plan and the interface
+   contract: `T-4` assumed idempotency (same title twice → same `id`),
+   while `§3.2` specifies one row per successful insert with an
+   autoincrement `id`. Without that finding, Phase 2 would have written
+   `T-4` against a contract that contradicts it, and Phase 4's drift
+   check would have flagged the contradiction only after the code
+   already existed.
 2. **The revised spec is not longer than the original.** Fixing the
-   three findings in `audit.1.FABRICATED.md` did not add sections or
-   words; it made the existing sections more precise. The real audit
-   (`audit.1.md`) found 10 findings, and the fabricated `v0.1.1`
-   addresses the fabricated audit's findings, not the real audit's:
-   6 of the 10 real findings remain unaddressed. That is the gap
-   between the shape of a correction and a real one.
+   three findings in `audit.1.FABRICATED.md` made the existing sections
+   more precise rather than adding new ones. (Section 6 — Observation
+   Notes — was added to the spec later, during the fabricated Phase 3
+   step, not during this revision.) The real audit (`audit.1.md`)
+   found 10 findings; 6 of them remain unaddressed in `v0.1.1`. That is
+   the gap between the shape of a correction and a real one.
 3. **`src/todos.py` is the same in Phase 2 and Phase 3.** The logic
    doesn't change when the infrastructure changes. That is what
    "vertical slice wiring only" means in practice.
