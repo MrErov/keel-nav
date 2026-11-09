@@ -1,27 +1,25 @@
 # Educational walkthrough: `todo-api`
 
-> ⚠️ **This is a constructed walkthrough, not a full live run.**
+> ⚠️ **This is a walkthrough of a failed Phase 1 closure.**
 >
-> **Two artifacts are real.** `specs/US-001.audit.1.md` and
-> `specs/US-001.audit.2.md` are the outputs of two real, blind Goldfish
-> sessions run on 2026-11-08 in fresh OpenCode sessions. Both audited
-> the spec and both returned `rejected`: round 1 (on v0.1.0) with 10
-> findings (2 blocking, 5 warning, 3 info), round 2 (on v0.1.1) with
-> 9 findings (3 blocking, 3 warning, 3 info). The revised spec
-> (`US-001.spec.md`, v0.1.1), `drift.1.md`, and the two
-> `.FABRICATED.md` audits are fabricated walkthrough artifacts.
+> **Four audit reports are real.** `audit.1.md`, `audit.2.md`,
+> `audit.3.md`, and `audit.4.md` are the output of four real, blind
+> Goldfish sessions run in fresh OpenCode sessions on 2026-11-08 and
+> 2026-11-09. **All four returned `rejected`.**
 >
-> See **"A note on fabrication"** at the bottom of this README for the
-> provenance of each file.
+> The other artifacts are either **authored** (`v0.1.0`, the original
+> draft; `v0.1.2` and `v0.1.3`, the corrections) or **fabricated**
+> (`audit.1.FABRICATED.md`, `audit.2.FABRICATED.md`, the `v0.1.1`
+> correction, and `drift.1.md`).
 >
 > **What this walkthrough IS useful for:** understanding the shape of
-> each artifact in ~5 minutes, and seeing how a blind audit catches what
-> a fabricated one misses — including the fact that a fabricated
-> "correction" can make a spec worse.
+> the audit artifact, and seeing what four rounds of real audit look
+> like when they do not converge on approval.
 >
 > **What it is NOT useful for:** proving the methodology works end to
-> end. Phase 1b ran twice for real; Phases 2, 3, and 4 did not. The
-> downstream artifacts are walkthrough illustrations, not evidence.
+> end. Of the methodology's phases, only Phase 1b (audit) produced
+> independent, real outputs. Phase 1 was attempted four times and never
+> closed. Phases 2, 3, and 4 were never run as methodology phases.
 
 ---
 
@@ -33,54 +31,59 @@ A single-endpoint REST API for creating todo items.
 - **Scope:** one user story (`US-001`), one endpoint (`POST /todos`),
   one table (`todos`).
 - **Explicitly out of scope:** authentication, listing, updating,
-  deleting, any UI.
+  deleting, any UI, internal whitespace normalization.
 
-## State machine — what each file represents
+---
 
-The example demonstrates a spec at three moments in its lifecycle:
+## Four real Goldfish audits, four rejections
 
-| File | Spec version | Status at that point |
-|------|--------------|---------------------|
-| `specs/US-001.spec.v0.1.0.md` | 0.1.0 | `draft` (before audit) |
-| `specs/US-001.spec.md` | 0.1.1 | `draft` (round 2 rejected) |
-| `specs/US-001.drift.1.md` | n/a (report) | fabricated; no real certification |
+| Round | Spec version | Verdict | Blocking | Warning | Info | Dominant category |
+|-------|--------------|---------|----------|---------|------|-------------------|
+| 1 | v0.1.0 | `rejected` | 2 | 5 | 3 | Spec logic (contradiction, hidden assumption) |
+| 2 | v0.1.1 | `rejected` | **3** | 3 | 3 | Spec vs. contract (AC-vs-§3.2, test taxonomy) |
+| 3 | v0.1.2 | `rejected` | 2 | 1 | 2 | Test traceability (test↔AC mapping, split ACs) |
+| 4 | v0.1.3 | `rejected` | **1** | 4 | 3 | Residual promotion (W2 from round 2 → B1) |
 
-`US-001.spec.v0.1.0.md` is what the spec writer produced first. It was
-**rejected** by the Goldfish in `audit.1`. The revised spec (`US-001.spec.md`,
-version 0.1.1) is the fabricated "correction". A real second Goldfish
-session (`audit.2`) also **rejected** it, with more blocking findings
-than round 1. The drift report is a fabricated illustration; no real
-Phase 4 run certified anything.
+**Blocking findings fell after round 2** (2 → 3 → 2 → 1) but **warnings
+fluctuated** (5 → 3 → 1 → 4). The spec converged on *what the endpoint
+does* but not on *tests that verify it*.
 
-> **Snapshot note:** `specs/US-001.spec.md` is a `draft` snapshot. The
-> drift report in this directory is fabricated and its §9 does not
-> certify a real implementation.
+Full reports: `audit.1.md`, `audit.2.md`, `audit.3.md`, `audit.4.md`.
 
-**The Phase 2 → Phase 3 transition:** the business logic in
-`src/todos.py` is written in Phase 2 and **does not change** in Phase 3.
-Phase 3 modifies `src/main.py` (removing a stub connection factory in
-favor of `src/db.py`) and adds `src/db.py`. The `main.py` modification
-is infrastructure wiring, not logic.
+---
 
-## Read order (5 minutes)
+## State machine
 
-1. **This README.**
-2. `specs/US-001.spec.v0.1.0.md` — see the draft that got rejected.
-3. `specs/US-001.audit.1.md` — see what the first real Goldfish found.
-4. `specs/US-001.spec.md` — see the fabricated "correction" (v0.1.1).
-5. `specs/US-001.audit.2.md` — see the second real Goldfish reject it.
+| File | Spec version | Status at that point | Verdict it records |
+|------|--------------|---------------------|-------------------|
+| `US-001.spec.v0.1.0.md` | 0.1.0 | `draft` | Audited by round 1 → `rejected` |
+| `US-001.spec.md` (history: v0.1.1) | 0.1.1 | `draft` (was `audited`, corrected) | Audited by round 2 → `rejected` |
+| `US-001.spec.md` (history: v0.1.2) | 0.1.2 | `draft` | Audited by round 3 → `rejected` |
+| `US-001.spec.md` (current: v0.1.3) | 0.1.3 | `draft` | Audited by round 4 → `rejected` |
+| `US-001.audit.2.FABRICATED.md` | — | — | Fabricated "approval" (preserved) |
+| `US-001.drift.1.md` | 0.1.1 | — | Fabricated drift report (no real Phase 4) |
 
-The two audit rounds are the point. Most frameworks produce a spec and
-stop. Keel Nav's claim is that a spec is not ready until it has survived
-a hostile read. This walkthrough shows a stronger result: a fabricated
-correction that was written against a fabricated audit does not survive
-a real second audit.
+The current spec is `v0.1.3`, `status: draft`. It has never been approved.
 
-> **Provenance note for this read order:** Steps 3 and 5 are real blind
-> Goldfish runs. The `audit.1.FABRICATED.md` and `audit.2.FABRICATED.md`
-> files are the original walkthrough versions, preserved for comparison.
-> The "reject → fix → reject harder" cycle is real on both audit ends;
-> only the revision between them is fabricated.
+---
+
+## Read order (15 minutes)
+
+1. **This README** (5 min).
+2. `US-001.spec.v0.1.0.md` — the first draft.
+3. `audit.1.md` — round 1 rejection (2 blocking: whitespace, idempotency).
+4. `audit.1.FABRICATED.md` — the fabricated version (3 findings; find what it missed).
+5. `US-001.spec.md` — current v0.1.3 (the accumulated result of 4 corrections).
+6. `audit.4.md` — round 4 rejection (1 blocking: the round-2 residual).
+
+Rounds 2 and 3 are in the directory for completeness; rounds 1 and 4
+alone tell the arc.
+
+**Note:** round 2's audit (`audit.2.md`) is **real**, not the fabricated
+"approval" the walkthrough originally showed. The fabricated version is
+preserved as `audit.2.FABRICATED.md`.
+
+---
 
 ## Full directory map
 
@@ -93,200 +96,179 @@ examples/todo-api/
 │   ├── 01-dependency-map.md
 │   ├── 02-risk-register.md
 │   └── todos.md
-├── specs/ (Phase 1a + 1b + 4 output)
-│   ├── US-001.spec.v0.1.0.md (original, rejected by round 1)
-│   ├── US-001.audit.1.md (real audit round 1: rejected)
-│   ├── US-001.audit.1.FABRICATED.md (fabricated round 1, preserved)
-│   ├── US-001.spec.md (fabricated correction, v0.1.1, draft)
-│   ├── US-001.audit.2.md (real audit round 2: rejected)
-│   ├── US-001.audit.2.FABRICATED.md (fabricated round 2, preserved)
-│   └── US-001.drift.1.md (fabricated drift: no-drift)
-├── src/ (Phase 2 + 3 output)
-│   ├── todos.py (business logic, Phase 2)
-│   ├── main.py (FastAPI app, Phase 2 + Phase 3 wiring)
-│   └── db.py (SQLite bootstrap, Phase 3)
-└── tests/
-    ├── test_todos.py (5 unit/integration tests, Phase 2)
-    └── test_e2e.py (2 e2e tests, Phase 3)
+├── specs/ (Phase 1 artifacts; the drift report is fabricated)
+│   ├── US-001.spec.v0.1.0.md (original draft, round 1 rejected)
+│   ├── US-001.audit.1.md (real round 1, rejected)
+│   ├── US-001.audit.1.FABRICATED.md (fabricated, preserved)
+│   ├── US-001.spec.md (current, v0.1.3)
+│   ├── US-001.audit.2.md (real round 2, rejected)
+│   ├── US-001.audit.2.FABRICATED.md (fabricated "approval", preserved)
+│   ├── US-001.audit.3.md (real round 3, rejected)
+│   ├── US-001.audit.4.md (real round 4, rejected)
+│   └── US-001.drift.1.md (fabricated drift report)
+├── src/ (walkthrough code, not real Phase 2/3 output)
+│   ├── todos.py (business logic)
+│   ├── main.py (FastAPI app)
+│   └── db.py (SQLite bootstrap)
+└── tests/ (walkthrough tests)
+    ├── test_todos.py (5 unit/integration tests)
+    └── test_e2e.py (2 e2e tests)
 ```
+
+---
 
 ## What you should notice
 
-1. **The rejection is more instructive than a fabricated approval.**
-   `audit.1.md` found a real contradiction between the test plan and the
-   interface contract: `T-4` assumed idempotency (same title twice → same
-   `id`), while `§3.2` specifies one row per successful insert with an
-   autoincrement `id`. Without that finding, Phase 2 would have written
-   `T-4` against a contract that contradicts it, and Phase 4's drift
-   check would have flagged the contradiction only after the code
-   already existed.
-2. **The fabricated correction is not a fix.** `v0.1.1` fixed the
-   three findings in `audit.1.FABRICATED.md`, but the real round 1 audit
-   had 10 findings and round 2 still rejected the result with 3 blocking
-   findings — one more than round 1's 2. The correction addressed some
-   real findings by overlap, half-addressed the whitespace finding, and
-   left the rest open. That is the gap between the shape of a correction
-   and a real one.
-3. **`src/todos.py` is the same in Phase 2 and Phase 3.** The logic
-   doesn't change when the infrastructure changes. That is what
-   "vertical slice wiring only" means in practice.
-4. **The drift report is short — but this one is fabricated.** In a real
-   Phase 4 run, a rigorous spec produces a short drift report. The report
-   in this directory illustrates the shape, not a real certification.
-5. **The tests pass, but they are not evidence that the spec was approved.**
-   3 ACs → 5 Phase 2 tests, plus 2 e2e tests for the §6 observations.
-   The suite is real and green; the spec it was written against is still
-   `draft` and was rejected twice by the real Goldfish.
+1. **The first rejection is the most instructive.** Round 1 found 2
+   blocking findings, including a real contradiction (T-4 assumed
+   idempotency while §3.2 specified autoincrement). Without the audit,
+   Phase 2 would have written tests against a contradictory contract.
+
+2. **The fabricated correction made it worse.** Round 2 rejected the
+   "corrected" v0.1.1 with **3 blocking** (one more than v0.1.0). The
+   fabrication was written against the fabricated audit's findings, not
+   the real ones. See the four-round analysis below.
+
+3. **The residuals come back.** Round 2's W2 (missing/null/non-string
+   title) was left open as a non-blocking warning. It became round 4's
+   **B1**, the *only* blocking finding of the final round.
+
+4. **The method does not terminate.** Four rounds, four rejections.
+   Blocking findings decreased, but no round produced `audited`.
+
+5. **The tests are weaker than the ACs.** Round 4 found that T-1, T-2,
+   and T-3 would pass on implementations that violate their ACs (no `id`
+   match check, no `error` value check, no `created_at` freshness check).
+   The test plan is a scope contract in name, but not in practice.
+
+---
+
+## What four rounds of real audit taught us
+
+This is the empirical result of the walkthrough.
+
+### 1. The method converges, but does not terminate
+
+Blocking findings per round: **2 → 3 → 2 → 1**. After round 2 the
+counter decreases, but four rounds produced zero approvals. A spec that
+starts at "obviously reasonable" needs at least four adversarial passes
+to reach "still one thing wrong."
+
+### 2. Findings change category, not just count
+
+- Rounds 1–2: **spec logic** (contradictions, hidden assumptions,
+  contract shape).
+- Round 3: **test traceability** (tests mapped to the wrong ACs,
+  tests too weak to verify their ACs).
+- Round 4: **residual promotion** (W2 declared "acceptable" in round 2
+  became blocking in round 4).
+
+The category progression is the real signal: the audit is not finding
+"the same thing repeatedly". It is finding *different layers* of the
+same problem as earlier layers get cleaned.
+
+### 3. Deferring a gap does not close it
+
+The round-2 W2 was documented as a non-blocking warning and left for a
+later revision. Round 4 promoted it to blocking. The method is telling
+us: **you can decide not to fix a finding, but the finding stays live.**
+The intervening revisions did not retire it.
+
+### 4. Test plans need their own audit pass
+
+Rounds 1–2 focused on spec logic and contract shape, with the test plan
+as a secondary concern. Rounds 3–4 rejected the assumption that "the
+ACs are right, so the tests will be right." Tests can be
+weaker than their ACs, mapped to the wrong ACs, or too vague to falsify
+the behavior they describe. The template's §4 is not enough — a
+dedicated "test audit" pass would catch it earlier.
+
+### 5. The 120-line template is a hard constraint that bites
+
+Later versions were trimmed or compressed to fit the limit. Rounds 3
+and 4 each required cutting text to make room for the fix. The template
+caps at 120 lines; the audit pressure wants more. For a single endpoint
+with one AC-3-level behavior, 120 lines is the ceiling, not the budget.
+
+**Implication for the methodology:** either the template needs more
+room (contradicting "lightweight"), or the "small user story" scope
+needs to be smaller, or the test plan needs its own section with its
+own line cap.
+
+### 6. Fabrication is not a shortcut
+
+`audit.1.FABRICATED.md` (3 findings) vs. `audit.1.md` (10 findings).
+The real Goldfish found **3.3× more findings**, including the exact
+category the fabrication missed: tests that don't verify their ACs.
+
+The fabricated correction (v0.1.1) was written against the fabricated
+audit's findings and **increased the blocking count** from 2 to 3.
+There is no fabrication shortcut that produces a spec a real audit
+approves.
+
+---
+
+## Why the walkthrough stops here
+
+Four rounds is enough to demonstrate the method's convergence pattern
+and its non-termination. A fifth round would produce more data, not
+new categories of evidence. The honest result is:
+
+> **Phase 1 does not close in 4 rounds. Phase 2 cannot start from
+> `status: draft`. The walkthrough is a failed closure experiment, and
+> the finding is that the method improves specs but does not approve
+> them within this template's constraints.**
+
+Closing further would require either (a) writing the round-4 fix to
+v0.1.4 and running round 5 (which would require reauthorizing a fifth
+round), or (b) using the Navigator override mechanism to declare
+`effective_verdict: audited` and proceed to Phase 2 with a spec known
+to be imperfect. Both are legitimate follow-on projects, not
+continuations of this walkthrough.
+
+---
 
 ## A note on fabrication
 
-This walkthrough contains **seven artifacts with four different kinds of
-provenance**. The README for each is honest about which is which; read
-this section before trusting any of them.
+| Artifact | Provenance | Description |
+|----------|-----------|-------------|
+| `US-001.spec.v0.1.0.md` | Authored | Pre-audit draft. Audited once by round 1 → rejected. |
+| `US-001.audit.1.md` | **Real** | Blind session, round 1. Verdict: `rejected`. 10 findings (2/5/3). |
+| `US-001.audit.1.FABRICATED.md` | Fabricated | Original walkthrough version. 3 findings (1/2/0). Preserved for comparison. |
+| `US-001.spec.md` (v0.1.1, historical) | Fabricated | Human-authored "fix" against the fabricated audit. Audited by round 2 real → rejected with 3 blocking (one more than v0.1.0). |
+| `US-001.audit.2.md` | **Real** | Blind session, round 2, audits v0.1.1. Verdict: `rejected`. 9 findings (3/3/3). |
+| `US-001.audit.2.FABRICATED.md` | Fabricated | Original "approval" round. Preserved for comparison. |
+| `US-001.spec.md` (v0.1.2, historical) | Authored | Human fixes against round 2's real findings. Audited by round 3 → rejected. |
+| `US-001.audit.3.md` | **Real** | Blind session, round 3, audits v0.1.2. Verdict: `rejected`. 5 findings (2/1/2). |
+| `US-001.spec.md` (v0.1.3, current) | Authored | Human fixes against round 3's findings. Audited by round 4 → rejected. |
+| `US-001.audit.4.md` | **Real** | Blind session, round 4, audits v0.1.3. Verdict: `rejected`. 8 findings (1/4/3). |
+| `US-001.drift.1.md` | Fabricated | Scripted drift report. No real Phase 4 run. |
 
-| Artifact | Provenance | What it is |
-|----------|-----------|-----------|
-| `US-001.spec.v0.1.0.md` | Authored | The draft spec as it stood before audit. Audited once; verdict: `rejected`. |
-| `US-001.audit.1.md` | **Real** | The **first real Goldfish session** recorded in this walkthrough. Run blind on 2026-11-08, in a fresh OpenCode session, against `US-001.spec.v0.1.0.md`. Verdict: `rejected`. **10 findings** (2 blocking, 5 warning, 3 info). |
-| `US-001.audit.1.FABRICATED.md` | Fabricated | The original walkthrough version of the audit. Written by a human **after** knowing the answer. Verdict: `rejected`. **3 findings** (1 blocking, 2 warning, 0 info). Preserved only to show the difference. |
-| `US-001.audit.2.md` | **Real** | The **second real Goldfish session** recorded in this walkthrough. Run blind on 2026-11-08, in a fresh OpenCode session, against `US-001.spec.md` (v0.1.1). Verdict: `rejected` — **3 blocking, 3 warning, 3 info**. See "Round 2 rejects harder than round 1" below. |
-| `US-001.audit.2.FABRICATED.md` | Fabricated | The original walkthrough version of a "round 2 approval". Preserved for comparison. **It is not a response to the real audit.** It addressed the 3 findings of `audit.1.FABRICATED.md`; the real round 2 rejects `v0.1.1` with 3 blocking findings. |
-| `US-001.spec.md` (v0.1.1) | Fabricated correction | A human-authored rewrite of the spec, made **after** the real round 1 audit returned `rejected`. It was written against the fabricated audit's three findings, not the real audit's ten. A real round 2 audit rejected it. Status: `draft`. |
-| `US-001.drift.1.md` | Fabricated | A scripted drift report. No real Phase 4 run. |
+---
 
-### Why both real and fabricated audits are preserved
+## What this walkthrough does not prove
 
-The first real Goldfish found **10 findings**; the first fabricated one
-found **3**. The second real Goldfish found **9** (3 blocking); the
-second fabricated one reported an approval. In both rounds the
-fabricated audit was **systematically too gentle**, in exactly the way
-confirmation bias predicts: the human who wrote it could only see what
-the spec *said*. The Goldfish, reading blind, could see what the spec
-*did not say*.
+- It does not prove Phase 1 closes end-to-end. It proves Phase 1 was
+  attempted four times and never closed.
+- It does not prove Phase 2, 3, or 4 work. None of those phases was run.
+- It does not prove the audit produces approved specs on "reasonable"
+  input. The input was a single endpoint with a single user story, and
+  it produced 4 consecutive rejections.
 
-The first fabricated audit missed the contradiction between `T-4`
-(idempotency) and `§3.2` (one row per insert, autoincrement `id`). It
-missed the whitespace-normalization assumption in `AC-3`. It missed that
-`T-1` and `T-5` can pass on incorrect stored values. It missed the
-structural gap where the spec jumps from `§4` to `§7` with no `§5`/`§6`.
-The second fabricated audit reported an approval for a version that the
-real second audit rejected with three blocking findings.
+What it does prove:
 
-All four audits are in this directory so a reader can verify the
-difference themselves. **A real blind audit is not a stricter re-read of
-a spec — it is a different kind of audit.** This is what Skill 02 is for.
+- Phase 1b works: 4 real blind audits caught issues the author missed.
+- Fabrication is not a shortcut: `audit.1.FABRICATED.md` was strictly
+  weaker than `audit.1.md` and missed the exact category round 4 would
+  later flag.
+- The method does not terminate: the convergence pattern is real but the
+  counter never reaches zero.
 
-### What this walkthrough does *not* prove
-
-- It does **not** prove that Phase 1b approves a corrected spec. Two
-  real audits ran, and both rejected their target.
-- It does **not** prove that Phases 2, 3, or 4 work as written. The
-  downstream artifacts (`drift.1.md` and the code/tests) are walkthrough
-  illustrations, not real phase evidence.
-- It is **two** data points about **one** phase. The retro of v0.2.0
-  said the gap was "no real Goldfish" — that gap is now "two real
-  Goldfish, on one spec, in one phase." The rest is still open.
-
-### How the real second round was run
-
-The real `audit.2.md` was produced by renaming the fabricated
-`US-001.audit.2.md` to `US-001.audit.2.FABRICATED.md`, then opening a
-fresh OpenCode session (no memory of this conversation) and running:
-
-```text
-Lee .meta-skills/02-egm-goldfish-audit.md y ejecuta Phase 1b.
-Inputs:
-spec_path: examples/todo-api/specs/US-001.spec.md
-context_doc: examples/todo-api/docs/context/todos.md
-audit_round: 2
-```
-
-The round returned `rejected` with three blocking findings. It did not
-approve the fabricated correction. The result is committed next to
-`audit.1.md`.
-
-## Round 2 rejects harder than round 1
-
-This is the single most important result of the walkthrough. Both rounds
-of the Goldfish audit were run for real, by blind sub-agents with no
-memory of the spec-writing session. Round 1 audited `v0.1.0`. Between
-rounds, `v0.1.1` was **fabricated** as a "correction" against the
-findings of the fabricated audit (`audit.1.FABRICATED.md`). Round 2
-audited `v0.1.1`.
-
-| | Round 1 (real, on v0.1.0) | Round 2 (real, on v0.1.1) |
-|--|----------------------------|----------------------------|
-| Verdict | `rejected` | `rejected` |
-| Blocking | 2 | **3** |
-| Warning | 5 | 3 |
-| Info | 3 | 3 |
-| Total | 10 | 9 |
-
-**v0.1.1 has more blocking findings than v0.1.0** — even though v0.1.1
-was presented (in this walkthrough) as the corrected version. The
-"correction" did not make the spec more approvable; it made it more
-contradictory.
-
-### Why
-
-`v0.1.1` was written against the **fabricated** audit's findings, not
-the real ones. It fixed the three things the fabricated audit complained
-about (422 response shape, AC-3 vagueness, idempotency test). Some of
-those fixes overlapped with real findings: the 422 shape was both the
-fabricated B1 and the real W1, and removing `T-4` resolved the real B1.
-But the revision did not work from the real audit's list. It left the
-whitespace finding (B2) half-addressed, left the missing-field and
-test-taxonomy findings (W4, I3) untouched, and still omits §5. In two
-places, it made the spec **worse**:
-
-1. **Whitespace normalization.** Round 1's B2 flagged that the spec
-   never stated whether `"  buy milk  "` is stored stripped or raw.
-   `v0.1.1` added "title after strip()" to AC-3 — but did not update
-   §3.2, which still says "the given title". The spec is now internally
-   inconsistent (AC vs contract), which is a stronger failure than the
-   original incompleteness. Round 2 catches it as B2.
-2. **Test taxonomy.** Round 1's I2 noted that `T-3` and `T-5` are typed
-   `unit` but assert HTTP behavior. `v0.1.1` added another `unit`-typed
-   test (`T-4`) and kept `T-3`/`T-5` as `unit`, so the taxonomy gap grew
-   rather than shrinking. Round 2 promotes the `T-3` case to blocking
-   (B3).
-
-### The meta-finding
-
-Round 2's I2 is the sharpest evidence that the walkthrough was
-dishonest before the real audits:
-
-> **I2 | BIAS |** The title and §8 record `status: audited` and a
-> round-2 audit path before this report exists, so the spec's
-> provenance asserts an outcome not yet assessed.
-
-`v0.1.1` claimed `status: audited` and pointed to `audit.2.md` (which
-was fabricated) **before** any real audit had run. The Goldfish, reading
-blind, caught this. The spec was lying about its own provenance in its
-own title and §8 metadata, and the blind auditor flagged it.
-
-### What this proves
-
-The retro at v0.2.0 said:
-
-> *"We never ran a real Goldfish, so we don't know if the method works
-> or if it just sounds good."*
-
-That question is now answered. The method works — and more
-specifically:
-
-> **Fabricating a correction against a fabricated audit does not produce
-> a spec that a real audit approves. It produces a spec that a real
-> audit rejects more strongly.** The blind Goldfish is not a stricter
-> version of a human re-read. It is a different kind of audit, and it
-> catches the class of errors that fabrication systematically misses:
-> the contradictions, assumptions, and coverage gaps the author cannot
-> see because they are in what the spec *does not say*.
+---
 
 ## Running the code (not the methodology)
 
-The code in `src/` and `tests/` is real, runnable Python. You can verify
-the tests pass:
+The code in `src/` and `tests/` is real, runnable Python:
 
 ```bash
 cd examples/todo-api
@@ -294,15 +276,17 @@ pip install -r requirements.txt
 pytest tests/ -v
 ```
 
-That is a sanity check on the code, not a validation of Keel Nav. The
-methodology's correctness is not tested by running pytest; it is tested
-by running Phases 0–4 on a real project with real audits.
+7 tests pass. That is a sanity check on the code, not a validation of
+Keel Nav. The methodology's correctness is measured by the audits above,
+not by running pytest.
 
 ## See also
 
-- [`AGENTS.md`](../../AGENTS.md) — behavioral contract
-- [`../../.meta-skills/`](../../.meta-skills/) — the six meta-skills
+- [`AGENTS.md`](../../AGENTS.md) — behavioral contract.
+- [`../../.meta-skills/`](../../.meta-skills/) — the six meta-skills.
 - [`../../docs/designs/`](../../docs/designs/) — real design specs with
-  provenance
+  provenance.
+- [`../../docs/known-limitations.md`](../../docs/known-limitations.md) —
+  the 11 live gaps in the methodology.
 - [`../../harnesses/generic/`](../../harnesses/generic/) — how to invoke
-  Keel Nav without a plugin
+  Keel Nav without a plugin.
