@@ -1,25 +1,31 @@
 # Educational walkthrough: `todo-api`
 
-> ⚠️ **This is a walkthrough of a failed Phase 1 closure.**
+> ⚠️ **This walkthrough closes Phase 1 with documented Navigator
+> overrides. Phases 2–4 are the next steps.**
 >
-> **Four audit reports are real.** `audit.1.md`, `audit.2.md`,
-> `audit.3.md`, and `audit.4.md` are the output of four real, blind
-> Goldfish sessions run in fresh OpenCode sessions on 2026-11-08 and
-> 2026-11-09. **All four returned `rejected`.**
+> **Phase 1 closed with 5 findings accepted as overrides** (1 blocking:
+> missing/non-string title; 4 warnings: internal whitespace untested,
+> 3 weak test descriptions). See `audit.4.md` §8 for the override
+> justifications. `effective_verdict: audited`, `status: audited`.
 >
-> The other artifacts are either **authored** (`v0.1.0`, the original
-> draft; `v0.1.2` and `v0.1.3`, the corrections) or **fabricated**
-> (`audit.1.FABRICATED.md`, `audit.2.FABRICATED.md`, the `v0.1.1`
-> correction, and `drift.1.md`).
+> **Phase 2 will run TDD against this audited spec.** The tests are
+> written before the implementation, and the three test-related
+> overrides (O3–O5) shift precision from the spec to the tests — the
+> tests will be stronger than the spec's T-1, T-2, T-3 descriptions,
+> deliberately.
 >
-> **What this walkthrough IS useful for:** understanding the shape of
-> the audit artifact, and seeing what four rounds of real audit look
-> like when they do not converge on approval.
+> **Phase 3 will wire the slice with real infrastructure and requires
+> human observation.** Phase 4 will certify no-drift, using the audit's
+> overrides as the baseline for what is "in scope".
 >
-> **What it is NOT useful for:** proving the methodology works end to
-> end. Of the methodology's phases, only Phase 1b (audit) produced
-> independent, real outputs. Phase 1 was attempted four times and never
-> closed. Phases 2, 3, and 4 were never run as methodology phases.
+> The purpose of this walkthrough is now to show that **the flow can
+> run end-to-end when Phase 1 closes with documented overrides**. It
+> does not claim the spec is perfect — it claims the spec is *sufficient
+> to proceed* and the imperfections are *visible*.
+>
+> The four audit reports are real; the v0.1.1 correction, the two
+> `.FABRICATED.md` audits, and `drift.1.md` are fabricated. See "A note
+> on fabrication" below.
 
 ---
 
@@ -50,6 +56,11 @@ does* but not on *tests that verify it*.
 
 Full reports: `audit.1.md`, `audit.2.md`, `audit.3.md`, `audit.4.md`.
 
+Round 4's `verdict` is `rejected`; its `effective_verdict` is `audited`
+because the Navigator accepted B1 and W1–W4 as known drift in §8. The
+four rejections are the auditor's verdicts; the closure is the
+Navigator's decision.
+
 ---
 
 ## State machine
@@ -59,11 +70,13 @@ Full reports: `audit.1.md`, `audit.2.md`, `audit.3.md`, `audit.4.md`.
 | `US-001.spec.v0.1.0.md` | 0.1.0 | `draft` | Audited by round 1 → `rejected` |
 | `US-001.spec.md` (history: v0.1.1) | 0.1.1 | `draft` (was `audited`, corrected) | Audited by round 2 → `rejected` |
 | `US-001.spec.md` (history: v0.1.2) | 0.1.2 | `draft` | Audited by round 3 → `rejected` |
-| `US-001.spec.md` (current: v0.1.3) | 0.1.3 | `draft` | Audited by round 4 → `rejected` |
+| `US-001.spec.md` (current: v0.1.3) | 0.1.3 | `audited` (via override) | Audited by round 4 → `rejected`; overridden → `audited` |
 | `US-001.audit.2.FABRICATED.md` | — | — | Fabricated "approval" (preserved) |
 | `US-001.drift.1.md` | 0.1.1 | — | Fabricated drift report (no real Phase 4) |
 
-The current spec is `v0.1.3`, `status: draft`. It has never been approved.
+The current spec is `v0.1.3`, `status: audited` via Navigator overrides.
+The auditor never approved it; the Navigator accepted the remaining
+findings as known drift.
 
 ---
 
@@ -74,7 +87,8 @@ The current spec is `v0.1.3`, `status: draft`. It has never been approved.
 3. `audit.1.md` — round 1 rejection (2 blocking: whitespace, idempotency).
 4. `audit.1.FABRICATED.md` — the fabricated version (3 findings; find what it missed).
 5. `US-001.spec.md` — current v0.1.3 (the accumulated result of 4 corrections).
-6. `audit.4.md` — round 4 rejection (1 blocking: the round-2 residual).
+6. `audit.4.md` — round 4 rejection (1 blocking: the round-2 residual);
+   §8 records the overrides that close Phase 1.
 
 Rounds 2 and 3 are in the directory for completeness; rounds 1 and 4
 alone tell the arc.
@@ -133,8 +147,10 @@ examples/todo-api/
    title) was left open as a non-blocking warning. It became round 4's
    **B1**, the *only* blocking finding of the final round.
 
-4. **The method does not terminate.** Four rounds, four rejections.
-   Blocking findings decreased, but no round produced `audited`.
+4. **The method does not terminate by approval.** Four rounds, four
+   rejections. Blocking findings decreased, but no round produced an
+   unqualified `audited`. Phase 1 closed only when the Navigator
+   overrode the remaining findings.
 
 5. **The tests are weaker than the ACs.** Round 4 found that T-1, T-2,
    and T-3 would pass on implementations that violate their ACs (no `id`
@@ -147,12 +163,13 @@ examples/todo-api/
 
 This is the empirical result of the walkthrough.
 
-### 1. The method converges, but does not terminate
+### 1. The audit converges, but does not terminate by approval
 
 Blocking findings per round: **2 → 3 → 2 → 1**. After round 2 the
 counter decreases, but four rounds produced zero approvals. A spec that
 starts at "obviously reasonable" needs at least four adversarial passes
-to reach "still one thing wrong."
+to reach "still one thing wrong." The audit never reaches zero; Phase 1
+closes via the Navigator override, not via approval.
 
 ### 2. Findings change category, not just count
 
@@ -172,7 +189,8 @@ same problem as earlier layers get cleaned.
 The round-2 W2 was documented as a non-blocking warning and left for a
 later revision. Round 4 promoted it to blocking. The method is telling
 us: **you can decide not to fix a finding, but the finding stays live.**
-The intervening revisions did not retire it.
+The intervening revisions did not retire it. The override accepts it as
+known drift; it does not close it.
 
 ### 4. Test plans need their own audit pass
 
@@ -181,7 +199,10 @@ as a secondary concern. Rounds 3–4 rejected the assumption that "the
 ACs are right, so the tests will be right." Tests can be
 weaker than their ACs, mapped to the wrong ACs, or too vague to falsify
 the behavior they describe. The template's §4 is not enough — a
-dedicated "test audit" pass would catch it earlier.
+dedicated "test audit" pass would catch it earlier. The round-4
+overrides O3–O5 make the consequence explicit: the Phase 2 tests will
+be stronger than the spec descriptions, and Phase 4 must verify that
+choice.
 
 ### 5. The 120-line template is a hard constraint that bites
 
@@ -208,23 +229,24 @@ approves.
 
 ---
 
-## Why the walkthrough stops here
+## Why Phase 1 closes here
 
-Four rounds is enough to demonstrate the method's convergence pattern
-and its non-termination. A fifth round would produce more data, not
-new categories of evidence. The honest result is:
+Four rounds is enough to demonstrate the audit's convergence pattern
+and its refusal to approve. A fifth round would produce more data, not
+a different outcome. The Navigator therefore accepts the round-4
+findings as known drift and closes Phase 1 via the override mechanism.
 
-> **Phase 1 does not close in 4 rounds. Phase 2 cannot start from
-> `status: draft`. The walkthrough is a failed closure experiment, and
-> the finding is that the method improves specs but does not approve
-> them within this template's constraints.**
+The closure is explicit:
 
-Closing further would require either (a) writing the round-4 fix to
-v0.1.4 and running round 5 (which would require reauthorizing a fifth
-round), or (b) using the Navigator override mechanism to declare
-`effective_verdict: audited` and proceed to Phase 2 with a spec known
-to be imperfect. Both are legitimate follow-on projects, not
-continuations of this walkthrough.
+- `audit.4.md` records `effective_verdict: audited` and the five
+  overrides.
+- `US-001.spec.md` records `status: audited`.
+- The open findings remain visible: B1 (malformed title), W1 (internal
+  whitespace untested), and W2–W4 (weak test descriptions).
+
+Phase 2 can now start against an audited spec. The overrides are the
+baseline: Phase 4 will treat behavior covered by them as known drift,
+and behavior outside them as potential drift.
 
 ---
 
@@ -240,20 +262,22 @@ continuations of this walkthrough.
 | `US-001.audit.2.FABRICATED.md` | Fabricated | Original "approval" round. Preserved for comparison. |
 | `US-001.spec.md` (v0.1.2, historical) | Authored | Human fixes against round 2's real findings. Audited by round 3 → rejected. |
 | `US-001.audit.3.md` | **Real** | Blind session, round 3, audits v0.1.2. Verdict: `rejected`. 5 findings (2/1/2). |
-| `US-001.spec.md` (v0.1.3, current) | Authored | Human fixes against round 3's findings. Audited by round 4 → rejected. |
-| `US-001.audit.4.md` | **Real** | Blind session, round 4, audits v0.1.3. Verdict: `rejected`. 8 findings (1/4/3). |
+| `US-001.spec.md` (v0.1.3, current) | Authored | Human fixes against round 3's findings. Audited by round 4 → rejected; overridden → audited. |
+| `US-001.audit.4.md` | **Real** | Blind session, round 4, audits v0.1.3. Verdict: `rejected`; effective verdict: `audited` via §8 overrides. 8 findings (1/4/3). |
 | `US-001.drift.1.md` | Fabricated | Scripted drift report. No real Phase 4 run. |
 
 ---
 
 ## What this walkthrough does not prove
 
-- It does not prove Phase 1 closes end-to-end. It proves Phase 1 was
-  attempted four times and never closed.
-- It does not prove Phase 2, 3, or 4 work. None of those phases was run.
+- It does not prove the audit can approve a spec. It proves Phase 1 can
+  close via the override mechanism after four rejections.
+- It does not prove Phase 2, 3, or 4 work. None of those phases has
+  been run yet.
 - It does not prove the audit produces approved specs on "reasonable"
   input. The input was a single endpoint with a single user story, and
-  it produced 4 consecutive rejections.
+  it produced 4 consecutive rejections; the Navigator, not the audit,
+  closed Phase 1.
 
 What it does prove:
 
@@ -261,8 +285,9 @@ What it does prove:
 - Fabrication is not a shortcut: `audit.1.FABRICATED.md` was strictly
   weaker than `audit.1.md` and missed the exact category round 4 would
   later flag.
-- The method does not terminate: the convergence pattern is real but the
-  counter never reaches zero.
+- The audit does not terminate by approval: the convergence pattern is
+  real but the counter never reaches zero. Phase 1 terminates only via
+  the Navigator override.
 
 ---
 

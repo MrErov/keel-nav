@@ -39,23 +39,32 @@ with the understanding that:
   (implicitly) the release where it might be addressed.
 - **`examples/todo-api/`** — constructed walkthrough of the five phases,
   explicitly labeled as not a live run. Includes the pre-audit spec, four
-  real audit rounds (all rejected), the drift report, 5 unit tests, and
-  2 e2e tests (7/7 pass).
+  real audit rounds (all rejected; Phase 1 closed via Navigator overrides),
+  the drift report, 5 unit tests, and 2 e2e tests (7/7 pass).
 - **Third and fourth real Goldfish audits**
   (`examples/todo-api/specs/US-001.audit.3.md` and `.audit.4.md`). Round 3
   rejected v0.1.2 with 2 blocking (test traceability: T-4/T-5 mapped to
   the wrong ACs, AC-3 scenarios split). Round 4 rejected v0.1.3 with 1
   blocking (round 2's deferred W2 promoted to blocking) plus 4 warnings
   about tests weaker than their ACs.
-- **Walkthrough reframed as a 4-round failed closure experiment.**
+- **Walkthrough reframed around the 4-round audit history.**
   `examples/todo-api/README.md` rewritten to reflect the actual result:
   four real audits, four rejections, and the six findings the four
   rounds produced about the method (convergence without termination,
   category progression, residual promotion, test plan weaknesses, the
-  120-line constraint, and the cost of fabrication).
+  120-line constraint, and the cost of fabrication). Phase 1 then
+  closed via the Navigator override mechanism.
 - **Spec v0.1.3** (`examples/todo-api/specs/US-001.spec.md`) — the
   human-authored fixes for round 3's findings, audited and rejected by
-  round 4. `status: draft`, `goldfish_audit: specs/US-001.audit.4.md`.
+  round 4; Phase 1 closed via Navigator overrides. `status: audited`,
+  `goldfish_audit: specs/US-001.audit.4.md`.
+- **Phase 1 closed with Navigator overrides.** `audit.4.md` §8 now
+  contains 5 overrides (1 blocking + 4 warning) with full justification
+  and scope. `US-001.spec.md` is now `status: audited` with
+  `effective_verdict: audited`. This is the first time Phase 1 closes
+  in the walkthrough, and it closes via the override mechanism, not via
+  approval. The 3 warning overrides (W2, W3, W4) shift precision from
+  the spec to the test suite, which will be verified in Phase 2.
 
 ### Removed
 
