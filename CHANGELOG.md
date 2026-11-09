@@ -38,9 +38,10 @@ with the understanding that:
   skills 03, 04, and 05. Each row lists the gap, its workaround, and
   (implicitly) the release where it might be addressed.
 - **`examples/todo-api/`** — constructed walkthrough of the five phases,
-  explicitly labeled as not a live run. Includes the pre-audit spec, four
-  real audit rounds (all rejected; Phase 1 closed via Navigator overrides),
-  the drift report, 5 unit tests, and 2 e2e tests (7/7 pass).
+  with Phases 1b–4 executed for real and Phase 0 documented as authored.
+  Includes the pre-audit spec, four real audit rounds (all rejected;
+  Phase 1 closed via Navigator overrides), the real drift report, 5 AC
+  tests, and 4 e2e tests (9/9 pass).
 - **Third and fourth real Goldfish audits**
   (`examples/todo-api/specs/US-001.audit.3.md` and `.audit.4.md`). Round 3
   rejected v0.1.2 with 2 blocking (test traceability: T-4/T-5 mapped to
@@ -91,6 +92,17 @@ with the understanding that:
   recorded on 2026-11-09. Spec `status: observed`. First time in this
   walkthrough that a human observation gate is passed against a real
   running system.
+- **Phase 4 (drift control) executed.** Real drift report
+  (`US-001.drift.REAL.md`) compared v0.1.3 against 6 files in `src/`
+  and `tests/`. Verdict: `no-drift` — 0 blocking findings, 2 info
+  findings (SQLite migration story, Pydantic unknown-field handling),
+  all 5 Phase 1b overrides either resolved (O3–O5) or still validly
+  scoped (O1–O2). Spec `status: certified`.
+- **Walkthrough complete end to end.** First time this walkthrough
+  executes Phases 1b, 2, 3, and 4 with real executions. Phase 0 remains
+  fabricated (context docs authored, not bootstrapped). The walkthrough
+  proves the method works end to end when Phase 1 closes with documented
+  overrides — not via approval, but via the override mechanism.
 
 ### Removed
 

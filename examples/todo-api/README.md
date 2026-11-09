@@ -1,26 +1,23 @@
 # Educational walkthrough: `todo-api`
 
-> ⚠️ **Phase 3 is observed. Phase 4 (drift control) is next.**
+> ✅ **This walkthrough ran Phases 1b–4 end to end. Phase 0 was not run.**
 >
-> **Phase 1 closed with 5 findings accepted as overrides** (1 blocking:
-> missing/non-string title; 4 warnings: internal whitespace untested,
-> 3 weak test descriptions). See `audit.4.md` §8 for the override
-> justifications. `effective_verdict: audited`.
+> **Phase 0:** context docs authored, not bootstrapped (fabricated).
+> **Phase 1a:** spec written and revised four times (v0.1.0 → v0.1.3).
+> **Phase 1b:** four real Goldfish audits, all `rejected`; Phase 1 closed
+> via Navigator overrides (5 findings accepted).
+> **Phase 2:** TDD against v0.1.3 — 5 AC tests with strong assertions per
+> O3–O5.
+> **Phase 3:** observed against a running uvicorn server — all 4 §6
+> observations passed.
+> **Phase 4:** drift check — `no-drift`, 0 blocking findings, 2 info
+> findings; all 5 Phase 1b overrides resolved or still validly scoped.
 >
-> **Phase 2 ran TDD against the audited spec.** Five tests cover T-1..T-5;
-> the O3–O5 overrides are honored by stronger assertions (persisted `id`
-> match, exact `error` value, `created_at` freshness).
+> **Final spec status:** `certified`. The walkthrough closes here.
 >
-> **Phase 3 ran against a running uvicorn server.** The Navigator ran the
-> live server and executed the §6 checklist; all four observations
-> passed. `status: observed`.
->
-> **Phase 4 will certify no-drift**, using the audit's overrides as the
-> baseline for what is "in scope".
->
-> The four audit reports are real; the v0.1.1 correction, the two
-> `.FABRICATED.md` audits, and `drift.1.md` are fabricated. See "A note
-> on fabrication" below.
+> Phases 1b, 2, 3, and 4 are real executions. Phase 0 is fabricated
+> (the context docs were authored). The two `.FABRICATED.md` audit
+> reports and the fabricated `drift.1.md` are preserved for comparison.
 
 ---
 
@@ -60,7 +57,8 @@ Navigator's decision.
 running uvicorn server on 2026-11-09. All 4 observations in §6 passed:
 ids monotonic (1, 2, 3), `created_at` distinct across a 1.298s gap, 422
 without `id` and with no row inserted, response time ~110ms
-(informational). Spec `status: observed`.
+(informational). Spec status after Phase 3: `observed`; Phase 4 later
+certified it as `no-drift`.
 
 ---
 
@@ -71,18 +69,19 @@ without `id` and with no row inserted, response time ~110ms
 | `US-001.spec.v0.1.0.md` | 0.1.0 | `draft` | Audited by round 1 → `rejected` |
 | `US-001.spec.md` (history: v0.1.1) | 0.1.1 | `draft` (was `audited`, corrected) | Audited by round 2 → `rejected` |
 | `US-001.spec.md` (history: v0.1.2) | 0.1.2 | `draft` | Audited by round 3 → `rejected` |
-| `US-001.spec.md` (current: v0.1.3) | 0.1.3 | `observed` | Audited by round 4 → `rejected`; overridden → `audited`; implemented → `observed` |
+| `US-001.spec.md` (current: v0.1.3) | 0.1.3 | `certified` | Audited by round 4 → `rejected`; overridden → `audited`; implemented → `observed` → `certified` |
+| `US-001.drift.REAL.md` | 0.1.3 | — | Real Phase 4 report: `no-drift` |
 | `US-001.audit.2.FABRICATED.md` | — | — | Fabricated "approval" (preserved) |
-| `US-001.drift.1.md` | 0.1.1 | — | Fabricated drift report (no real Phase 4) |
+| `US-001.drift.1.md` | 0.1.1 | — | Fabricated drift report (preserved) |
 
-The current spec is `v0.1.3`, `status: observed`. The auditor never
+The current spec is `v0.1.3`, `status: certified`. The auditor never
 approved it; the Navigator accepted the remaining findings as known
-drift, Phase 2 implemented the spec, and Phase 3 observed it against a
-running server.
+drift, Phase 2 implemented the spec, Phase 3 observed it against a
+running server, and Phase 4 certified no-drift.
 
 ---
 
-## Read order (15 minutes)
+## Read order (20 minutes)
 
 1. **This README** (5 min).
 2. `US-001.spec.v0.1.0.md` — the first draft.
@@ -91,6 +90,7 @@ running server.
 5. `US-001.spec.md` — current v0.1.3 (the accumulated result of 4 corrections).
 6. `audit.4.md` — round 4 rejection (1 blocking: the round-2 residual);
    §8 records the overrides that close Phase 1.
+7. `US-001.drift.REAL.md` — the real Phase 4 report (`no-drift`).
 
 Rounds 2 and 3 are in the directory for completeness; rounds 1 and 4
 alone tell the arc.
@@ -112,7 +112,7 @@ examples/todo-api/
 │   ├── 01-dependency-map.md
 │   ├── 02-risk-register.md
 │   └── todos.md
-├── specs/ (Phase 1 artifacts; drift.1 is fabricated)
+├── specs/ (Phase 1 artifacts + real drift report; drift.1 is fabricated)
 │   ├── US-001.spec.v0.1.0.md (original draft, round 1 rejected)
 │   ├── US-001.audit.1.md (real round 1, rejected)
 │   ├── US-001.audit.1.FABRICATED.md (fabricated, preserved)
@@ -121,6 +121,7 @@ examples/todo-api/
 │   ├── US-001.audit.2.FABRICATED.md (fabricated "approval", preserved)
 │   ├── US-001.audit.3.md (real round 3, rejected)
 │   ├── US-001.audit.4.md (real round 4, rejected)
+│   ├── US-001.drift.REAL.md (real Phase 4 report, no-drift)
 │   └── US-001.drift.1.md (fabricated drift report)
 ├── src/ (Phase 2 + Phase 3 output)
 │   ├── todos.py (business logic)
@@ -254,9 +255,9 @@ Phase 2 can now start against an audited spec. The overrides are the
 baseline: Phase 4 will treat behavior covered by them as known drift,
 and behavior outside them as potential drift.
 
-**Update (2026-11-09):** Phase 3 has since been executed. The spec is
-`status: observed`; all four §6 observations passed against a running
-uvicorn server. Phase 4 (drift control) is next.
+**Update (2026-11-09):** Phases 3 and 4 have since been executed. The
+spec is `status: certified` after a real drift report (`no-drift`). The
+Navigator ran the live uvicorn server; all four §6 observations passed.
 
 ---
 
@@ -272,34 +273,43 @@ uvicorn server. Phase 4 (drift control) is next.
 | `US-001.audit.2.FABRICATED.md` | Fabricated | Original "approval" round. Preserved for comparison. |
 | `US-001.spec.md` (v0.1.2, historical) | Authored | Human fixes against round 2's real findings. Audited by round 3 → rejected. |
 | `US-001.audit.3.md` | **Real** | Blind session, round 3, audits v0.1.2. Verdict: `rejected`. 5 findings (2/1/2). |
-| `US-001.spec.md` (v0.1.3, current) | Authored | Human fixes against round 3's findings. Audited by round 4 → rejected; overridden → audited; implemented → observed. |
+| `US-001.spec.md` (v0.1.3, current) | Authored | Human fixes against round 3's findings. Audited by round 4 → rejected; overridden → audited; implemented → observed → certified. |
 | `US-001.audit.4.md` | **Real** | Blind session, round 4, audits v0.1.3. Verdict: `rejected`; effective verdict: `audited` via §8 overrides. 8 findings (1/4/3). |
-| `US-001.drift.1.md` | Fabricated | Scripted drift report. No real Phase 4 run. |
+| `US-001.drift.REAL.md` | **Real** | Phase 4 drift report. Verdict: `no-drift`. 0 blocking, 2 info, 5 inherited overrides. |
+| `US-001.drift.1.md` | Fabricated | Scripted drift report. Preserved for comparison; no real Phase 4 run. |
 
 ---
 
-## What this walkthrough does not prove
+## What the walkthrough proves
 
-- It does not prove the audit can approve a spec. It proves Phase 1 can
-  close via the override mechanism after four rejections.
-- It does not prove Phase 4 works. Phase 4 has not run yet.
-- It does not prove the audit produces approved specs on "reasonable"
-  input. The input was a single endpoint with a single user story, and
-  it produced 4 consecutive rejections; the Navigator, not the audit,
-  closed Phase 1.
+This walkthrough executes Phases 1b–4 end to end. Phase 0 was not run.
 
-What it does prove:
+| Phase | Real? | What it proves |
+|-------|-------|-----------------|
+| 0 | No (fabricated) | — (context bootstrap not exercised) |
+| 1a | Authored | Specs can be written and revised against real findings |
+| 1b | **Yes** (4 rounds) | Blind audits catch what humans miss; fabrication is not a shortcut; the audit converges but does not terminate by approval |
+| 2 | **Yes** (retro-TDD) | Tests derived from an audited spec pass against the implementation |
+| 3 | **Yes** (human observation) | The spec's observations hold against a running system |
+| 4 | **Yes** | The code matches the spec; Phase 1b overrides are resolved or validly scoped |
 
-- Phase 1b works: 4 real blind audits caught issues the author missed.
-- Phase 2 works: 5 tests derived from the audited spec pass, including
-  the stronger assertions promised by O3–O5.
-- Phase 3 works: all 4 §6 observations passed against a running server.
-- Fabrication is not a shortcut: `audit.1.FABRICATED.md` was strictly
-  weaker than `audit.1.md` and missed the exact category round 4 would
-  later flag.
-- The audit does not terminate by approval: the convergence pattern is
-  real but the counter never reaches zero. Phase 1 terminates only via
-  the Navigator override.
+**The core finding:** the methodology works end to end when Phase 1
+closes with documented overrides. It does not close via approval in this
+walkthrough — it closes via the override mechanism designed for exactly
+this case. The findings are visible, accepted, and verified.
+
+**What it does not prove:**
+
+- That Phase 1 can close via approval. Four rounds suggest it cannot,
+  in practice, within the 120-line template.
+- That Phase 0 works. It was not tested; the context docs were authored.
+- That the code has no bugs. No bug audit was performed.
+- That the spec is perfect. It has 5 accepted findings; B1 and W1
+  remain open by scope.
+
+The retro-TDD caveat: the implementation predates the Phase 2 tests, so
+the RED-first ordering was not observed. The tests are spec-derived and
+stronger than the spec's T-1..T-3 descriptions, but the code came first.
 
 ---
 
