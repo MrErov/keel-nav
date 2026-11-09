@@ -16,117 +16,58 @@ with the understanding that:
 
 ## [Unreleased]
 
-### Changed
+Nothing yet.
 
-- **Compressed `.meta-skills/02-egm-goldfish-audit.md`** from 490 to
-  300 lines. All 5 protocol steps, G1–G9 gates, and anti-patterns
-  preserved. `effective_verdict` mechanism and `## Navigator overrides`
-  section intact.
-- **Compressed `.meta-skills/05-drift-control.md`** from 491 to 300
-  lines. All 7 protocol steps, G1–G12 gates, and anti-patterns preserved.
-  Navigator overrides mechanism intact. "Known gaps" section moved to
-  `docs/known-limitations.md`.
+## [0.3.0-alpha] - 2026-11-09
 
 ### Added
 
-- **Second real Goldfish audit** (`examples/todo-api/specs/US-001.audit.2.md`)
-  run blind on `v0.1.1`. Verdict: `rejected` with 3 blocking findings —
-  more blocking findings than round 1's audit of `v0.1.0` (2). Demonstrates
-  empirically that a fabricated correction against a fabricated audit
-  produces a spec that a real audit rejects more strongly, not less.
-- **`docs/known-limitations.md`** — consolidates the 11 live gaps across
-  skills 03, 04, and 05. Each row lists the gap, its workaround, and
-  (implicitly) the release where it might be addressed.
-- **`examples/todo-api/`** — constructed walkthrough of the five phases,
-  with Phases 1b–4 executed for real and Phase 0 documented as authored.
-  Includes the pre-audit spec, four real audit rounds (all rejected;
-  Phase 1 closed via Navigator overrides), the real drift report, 5 AC
-  tests, and 4 e2e tests (9/9 pass).
-- **Third and fourth real Goldfish audits**
-  (`examples/todo-api/specs/US-001.audit.3.md` and `.audit.4.md`). Round 3
-  rejected v0.1.2 with 2 blocking (test traceability: T-4/T-5 mapped to
-  the wrong ACs, AC-3 scenarios split). Round 4 rejected v0.1.3 with 1
-  blocking (round 2's deferred W2 promoted to blocking) plus 4 warnings
-  about tests weaker than their ACs.
-- **Walkthrough reframed around the 4-round audit history.**
-  `examples/todo-api/README.md` rewritten to reflect the actual result:
-  four real audits, four rejections, and the six findings the four
-  rounds produced about the method (convergence without termination,
-  category progression, residual promotion, test plan weaknesses, the
-  120-line constraint, and the cost of fabrication). Phase 1 then
-  closed via the Navigator override mechanism.
-- **Spec v0.1.3** (`examples/todo-api/specs/US-001.spec.md`) — the
-  human-authored fixes for round 3's findings, audited and rejected by
-  round 4; Phase 1 closed via Navigator overrides. `status: audited`,
-  `goldfish_audit: specs/US-001.audit.4.md`.
-- **Phase 1 closed with Navigator overrides.** `audit.4.md` §8 now
-  contains 5 overrides (1 blocking + 4 warning) with full justification
-  and scope. `US-001.spec.md` is now `status: audited` with
-  `effective_verdict: audited`. This is the first time Phase 1 closes
-  in the walkthrough, and it closes via the override mechanism, not via
-  approval. The 3 warning overrides (W2, W3, W4) shift precision from
-  the spec to the test suite, which will be verified in Phase 2.
-- **Phase 2 executed against v0.1.3.** `tests/test_todos.py` rewritten to
-  use the HTTP layer (TestClient) instead of calling `create_todo`
-  directly, matching v0.1.3's "integration" typing. Strong assertions per
-  Navigator overrides O3-O5: T-1 asserts `id` matches the persisted row
-  and `created_at` is fresh (< 60s); T-2 and T-3 assert the exact
-  `error == "title_required"` code. All 5 tests pass against the existing
-  `src/todos.py` and `src/main.py`. **Note:** the code predates the tests
-  by several rounds, so TDD's RED-first ordering is not verifiable in this
-  walkthrough. The tests are spec-derived, not code-derived, and are
-  demonstrably non-tautological against the assertions O3-O5 add.
-- **Phase 3 test scaffolding** — `tests/conftest.py` (fixes `pytest` path
-  resolution: plain `pytest tests/` now works without `python -m`),
-  `tests/test_e2e.py` rewritten to cover the 4 observations in v0.1.3 §6
-  (id monotonicity, created_at distinct across seconds, 422 has no id,
-  response time informational). **No `src/` changes needed:** the app was
-  already wired to file-backed SQLite via `src/db.get_conn`. Phase 3's
-  "wiring" was done in Phase 2 for this project; the boundary between
-  phases is the §6 observations, not the infrastructure.
-- **Phase 3 (ODD) executed against a running uvicorn server.** All 4
-  observations from v0.1.3 §6 verified: ids monotonic (1, 2, 3),
-  `created_at` distinct across a 1.298s gap, 422 without `id` and with
-  no row inserted, response time ~110ms (informational). The Navigator
-  ran the live server and executed the checklist; the outputs were
-  recorded on 2026-11-09. Spec `status: observed`. First time in this
-  walkthrough that a human observation gate is passed against a real
-  running system.
-- **Phase 4 (drift control) executed.** Real drift report
-  (`US-001.drift.REAL.md`) compared v0.1.3 against 6 files in `src/`
-  and `tests/`. Verdict: `no-drift` — 0 blocking findings, 2 info
-  findings (SQLite migration story, Pydantic unknown-field handling),
-  all 5 Phase 1b overrides either resolved (O3–O5) or still validly
-  scoped (O1–O2). Spec `status: certified`.
-- **Walkthrough complete end to end.** First time this walkthrough
-  executes Phases 1b, 2, 3, and 4 with real executions. Phase 0 remains
-  fabricated (context docs authored, not bootstrapped). The walkthrough
-  proves the method works end to end when Phase 1 closes with documented
-  overrides — not via approval, but via the override mechanism.
+- **First end-to-end walkthrough** (`examples/todo-api/`). Phases 1b, 2,
+  3, and 4 executed for real: 4 blind Goldfish audits (all rejected),
+  Phase 1 closed via Navigator overrides, TDD against the audited spec,
+  human observation against a running uvicorn server, drift certification
+  (`no-drift`, 0 blocking). Phase 0 was not executed (context docs were
+  authored, not bootstrapped).
 
-### Removed
+- **`docs/designs/`** — 3 retrospective design specs with commit provenance:
+  `effective-verdict.md`, `blind-audit-protocol.md`, `skill-compression.md`.
 
-- **Skill 04 gap #4** — the `status: observed` bullet was obsolete
-  (`templates/spec.template.md` already includes `observed` in the enum
-  as of v0.2.0-alpha).
+- **`docs/known-limitations.md`** — consolidated 11 live gaps across
+  skills 03, 04, and 05. Includes the "not gaps, by design" section that
+  distinguishes deliberate non-goals (no CI, no README.es.md) from real
+  limitations.
 
-### Docs
+- **YAML quoting note in `CONTRIBUTING.md` §3.1** — string values
+  containing `': '` must be quoted.
 
-- **`CONTRIBUTING.md` §3.1** — added a YAML quoting note (values
-  containing `': '` must be quoted). References the YAML guide comment
-  in `templates/spec.template.md` §8.
-- **`docs/designs/`** — three retrospective design specs
-  (`effective-verdict`, `blind-audit-protocol`, `skill-compression`) with
-  commit provenance and alternatives considered. `source: retrospective`
-  records that they document decisions already implemented.
+### Changed
+
+- **Compressed `.meta-skills/02-egm-goldfish-audit.md` and `.meta-skills/05-drift-control.md`**
+  from ~490 lines each to 300 lines each. All protocol steps, quality
+  gates, anti-patterns, and override mechanisms preserved. Known gaps
+  sections moved to `docs/known-limitations.md`.
+
+- **`README.md`** — added `docs/designs/`, `docs/known-limitations.md`,
+  and `examples/todo-api/` to the repository tree.
+
+- **`CHANGELOG.md`** — records the 4 real audits, the fabricated pairs
+  preserved for comparison, the Phase 1 closure via overrides, and the
+  Phase 2-3-4 executions.
+
+### Fixed
+
+- **Obsolete gap in `.meta-skills/04-odd-vertical-slice.md`** — the
+  `status: observed` gap was removed (template already includes the
+  status).
+
+- **`pytest tests/` failed without `python -m`** in `examples/todo-api/`.
+  Added `tests/conftest.py` to insert the project root into `sys.path`.
 
 ### Deferred
 
-- **Priority 3 (CI).** Declined as a speculative preventive. The manual
-  mechanical check has 20+ turns of clean data; the defects that mattered
-  in this project (semantic spec/audit mismatches) are not caught by CI
-  anyway. Deferred pending one of the documented triggers in
-  `docs/known-limitations.md`.
+- **Priority 3 (CI).** Declined as speculative preventive. Four triggers
+  documented in `docs/known-limitations.md`: external PR, mechanical
+  defect reaching `main`, second contributor, or >~15 meta-skills.
 
 ## [0.2.0-alpha] - 2026-11-08
 
@@ -256,6 +197,7 @@ with the understanding that:
   detection, complexity thresholds, dependency audit, override retirement,
   cross-context drift. All out of scope for v0.1.0.
 
-[Unreleased]: https://github.com/MrErov/keel-nav/compare/v0.2.0-alpha...HEAD
+[Unreleased]: https://github.com/MrErov/keel-nav/compare/v0.3.0-alpha...HEAD
+[0.3.0-alpha]: https://github.com/MrErov/keel-nav/releases/tag/v0.3.0-alpha
 [0.2.0-alpha]: https://github.com/MrErov/keel-nav/releases/tag/v0.2.0-alpha
 [0.1.0-alpha]: https://github.com/MrErov/keel-nav/releases/tag/v0.1.0-alpha
