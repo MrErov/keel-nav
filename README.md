@@ -106,8 +106,16 @@ keel-nav/
 │   ├── cursor/                      ✅ v0.2.0-alpha
 │   ├── generic/                     ✅ v0.1.0-alpha
 │   └── dsh-bridges/                 ✅ v0.2.0-alpha  (documentation only)
-├── docs/context/                    # Phase 0 self-applied (Elephant Memory)
-│   └── 00-overview.md               ✅ Phase 0 baseline
+├── docs/                            # Methodology documentation
+│   ├── context/                     # Phase 0 self-applied (Elephant Memory)
+│   │   └── 00-overview.md           ✅ Phase 0 baseline
+│   ├── designs/                     ✅ post-v0.2.0-alpha
+│   │   ├── effective-verdict.md
+│   │   ├── blind-audit-protocol.md
+│   │   └── skill-compression.md
+│   └── known-limitations.md         ✅ post-v0.2.0-alpha
+├── examples/                        # Educational artifacts
+│   └── todo-api/                    ✅ post-v0.2.0-alpha (constructed walkthrough)
 ├── AGENTS.md                        ✅ Canonical AI behavioral contract
 ├── CONTRIBUTING.md                  ✅ Contribution protocol
 ├── CHANGELOG.md                     ✅ v0.2.0-alpha
@@ -117,7 +125,8 @@ keel-nav/
 ```
 
 > **Legend:** ✅ = shipped. The version in parentheses is the release
-> where the file landed. The tree is fully shipped as of `v0.2.0-alpha`.
+> where the file landed. Items marked `post-v0.2.0-alpha` are on `main`
+> but not in a tagged release.
 
 ## Quick Start
 

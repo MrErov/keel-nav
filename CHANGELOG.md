@@ -32,6 +32,9 @@ with the understanding that:
 - **`docs/known-limitations.md`** — consolidates the 11 live gaps across
   skills 03, 04, and 05. Each row lists the gap, its workaround, and
   (implicitly) the release where it might be addressed.
+- **`examples/todo-api/`** — constructed walkthrough of the five phases,
+  explicitly labeled as not a live run. Includes the pre-audit spec, two
+  audit rounds, the drift report, 5 unit tests, and 2 e2e tests (7/7 pass).
 
 ### Removed
 
@@ -44,6 +47,10 @@ with the understanding that:
 - **`CONTRIBUTING.md` §3.1** — added a YAML quoting note (values
   containing `': '` must be quoted). References the YAML guide comment
   in `templates/spec.template.md` §8.
+- **`docs/designs/`** — three retrospective design specs
+  (`effective-verdict`, `blind-audit-protocol`, `skill-compression`) with
+  commit provenance and alternatives considered. `source: retrospective`
+  records that they document decisions already implemented.
 
 ### Deferred
 
