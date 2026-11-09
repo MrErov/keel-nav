@@ -83,6 +83,14 @@ with the understanding that:
   already wired to file-backed SQLite via `src/db.get_conn`. Phase 3's
   "wiring" was done in Phase 2 for this project; the boundary between
   phases is the §6 observations, not the infrastructure.
+- **Phase 3 (ODD) executed against a running uvicorn server.** All 4
+  observations from v0.1.3 §6 verified: ids monotonic (1, 2, 3),
+  `created_at` distinct across a 1.298s gap, 422 without `id` and with
+  no row inserted, response time ~110ms (informational). The Navigator
+  ran the live server and executed the checklist; the outputs were
+  recorded on 2026-11-09. Spec `status: observed`. First time in this
+  walkthrough that a human observation gate is passed against a real
+  running system.
 
 ### Removed
 

@@ -1,27 +1,22 @@
 # Educational walkthrough: `todo-api`
 
-> ⚠️ **This walkthrough closes Phase 1 with documented Navigator
-> overrides. Phases 2–4 are the next steps.**
+> ⚠️ **Phase 3 is observed. Phase 4 (drift control) is next.**
 >
 > **Phase 1 closed with 5 findings accepted as overrides** (1 blocking:
 > missing/non-string title; 4 warnings: internal whitespace untested,
 > 3 weak test descriptions). See `audit.4.md` §8 for the override
-> justifications. `effective_verdict: audited`, `status: audited`.
+> justifications. `effective_verdict: audited`.
 >
-> **Phase 2 will run TDD against this audited spec.** The tests are
-> written before the implementation, and the three test-related
-> overrides (O3–O5) shift precision from the spec to the tests — the
-> tests will be stronger than the spec's T-1, T-2, T-3 descriptions,
-> deliberately.
+> **Phase 2 ran TDD against the audited spec.** Five tests cover T-1..T-5;
+> the O3–O5 overrides are honored by stronger assertions (persisted `id`
+> match, exact `error` value, `created_at` freshness).
 >
-> **Phase 3 will wire the slice with real infrastructure and requires
-> human observation.** Phase 4 will certify no-drift, using the audit's
-> overrides as the baseline for what is "in scope".
+> **Phase 3 ran against a running uvicorn server.** The Navigator ran the
+> live server and executed the §6 checklist; all four observations
+> passed. `status: observed`.
 >
-> The purpose of this walkthrough is now to show that **the flow can
-> run end-to-end when Phase 1 closes with documented overrides**. It
-> does not claim the spec is perfect — it claims the spec is *sufficient
-> to proceed* and the imperfections are *visible*.
+> **Phase 4 will certify no-drift**, using the audit's overrides as the
+> baseline for what is "in scope".
 >
 > The four audit reports are real; the v0.1.1 correction, the two
 > `.FABRICATED.md` audits, and `drift.1.md` are fabricated. See "A note
@@ -61,6 +56,12 @@ because the Navigator accepted B1 and W1–W4 as known drift in §8. The
 four rejections are the auditor's verdicts; the closure is the
 Navigator's decision.
 
+**Phase 3 ran after Phase 1 closure.** The spec was observed against a
+running uvicorn server on 2026-11-09. All 4 observations in §6 passed:
+ids monotonic (1, 2, 3), `created_at` distinct across a 1.298s gap, 422
+without `id` and with no row inserted, response time ~110ms
+(informational). Spec `status: observed`.
+
 ---
 
 ## State machine
@@ -70,13 +71,14 @@ Navigator's decision.
 | `US-001.spec.v0.1.0.md` | 0.1.0 | `draft` | Audited by round 1 → `rejected` |
 | `US-001.spec.md` (history: v0.1.1) | 0.1.1 | `draft` (was `audited`, corrected) | Audited by round 2 → `rejected` |
 | `US-001.spec.md` (history: v0.1.2) | 0.1.2 | `draft` | Audited by round 3 → `rejected` |
-| `US-001.spec.md` (current: v0.1.3) | 0.1.3 | `audited` (via override) | Audited by round 4 → `rejected`; overridden → `audited` |
+| `US-001.spec.md` (current: v0.1.3) | 0.1.3 | `observed` | Audited by round 4 → `rejected`; overridden → `audited`; implemented → `observed` |
 | `US-001.audit.2.FABRICATED.md` | — | — | Fabricated "approval" (preserved) |
 | `US-001.drift.1.md` | 0.1.1 | — | Fabricated drift report (no real Phase 4) |
 
-The current spec is `v0.1.3`, `status: audited` via Navigator overrides.
-The auditor never approved it; the Navigator accepted the remaining
-findings as known drift.
+The current spec is `v0.1.3`, `status: observed`. The auditor never
+approved it; the Navigator accepted the remaining findings as known
+drift, Phase 2 implemented the spec, and Phase 3 observed it against a
+running server.
 
 ---
 
@@ -105,12 +107,12 @@ preserved as `audit.2.FABRICATED.md`.
 examples/todo-api/
 ├── README.md (this file)
 ├── requirements.txt
-├── docs/context/ (Phase 0 output)
+├── docs/context/ (Phase 0 output; authored, not bootstrapped)
 │   ├── 00-overview.md
 │   ├── 01-dependency-map.md
 │   ├── 02-risk-register.md
 │   └── todos.md
-├── specs/ (Phase 1 artifacts; the drift report is fabricated)
+├── specs/ (Phase 1 artifacts; drift.1 is fabricated)
 │   ├── US-001.spec.v0.1.0.md (original draft, round 1 rejected)
 │   ├── US-001.audit.1.md (real round 1, rejected)
 │   ├── US-001.audit.1.FABRICATED.md (fabricated, preserved)
@@ -120,13 +122,14 @@ examples/todo-api/
 │   ├── US-001.audit.3.md (real round 3, rejected)
 │   ├── US-001.audit.4.md (real round 4, rejected)
 │   └── US-001.drift.1.md (fabricated drift report)
-├── src/ (walkthrough code, not real Phase 2/3 output)
+├── src/ (Phase 2 + Phase 3 output)
 │   ├── todos.py (business logic)
 │   ├── main.py (FastAPI app)
 │   └── db.py (SQLite bootstrap)
-└── tests/ (walkthrough tests)
-    ├── test_todos.py (5 unit/integration tests)
-    └── test_e2e.py (2 e2e tests)
+└── tests/
+    ├── test_todos.py (5 AC tests)
+    ├── test_e2e.py (4 observation tests)
+    └── conftest.py (plain-pytest path fix)
 ```
 
 ---
@@ -152,10 +155,13 @@ examples/todo-api/
    unqualified `audited`. Phase 1 closed only when the Navigator
    overrode the remaining findings.
 
-5. **The tests are weaker than the ACs.** Round 4 found that T-1, T-2,
-   and T-3 would pass on implementations that violate their ACs (no `id`
-   match check, no `error` value check, no `created_at` freshness check).
-   The test plan is a scope contract in name, but not in practice.
+5. **The audit found the tests weaker than the ACs; Phase 2 fixed it.**
+   Round 4 found that T-1, T-2, and T-3 would pass on implementations
+   that violate their ACs (no `id` match check, no `error` value check,
+   no `created_at` freshness check). Phase 2 then strengthened them per
+   O3–O5: T-1 matches the persisted `id` and checks timestamp freshness;
+   T-2/T-3 assert the exact `error` value. The audit finding is
+   historical; the tests are no longer weak.
 
 ---
 
@@ -248,6 +254,10 @@ Phase 2 can now start against an audited spec. The overrides are the
 baseline: Phase 4 will treat behavior covered by them as known drift,
 and behavior outside them as potential drift.
 
+**Update (2026-11-09):** Phase 3 has since been executed. The spec is
+`status: observed`; all four §6 observations passed against a running
+uvicorn server. Phase 4 (drift control) is next.
+
 ---
 
 ## A note on fabrication
@@ -262,7 +272,7 @@ and behavior outside them as potential drift.
 | `US-001.audit.2.FABRICATED.md` | Fabricated | Original "approval" round. Preserved for comparison. |
 | `US-001.spec.md` (v0.1.2, historical) | Authored | Human fixes against round 2's real findings. Audited by round 3 → rejected. |
 | `US-001.audit.3.md` | **Real** | Blind session, round 3, audits v0.1.2. Verdict: `rejected`. 5 findings (2/1/2). |
-| `US-001.spec.md` (v0.1.3, current) | Authored | Human fixes against round 3's findings. Audited by round 4 → rejected; overridden → audited. |
+| `US-001.spec.md` (v0.1.3, current) | Authored | Human fixes against round 3's findings. Audited by round 4 → rejected; overridden → audited; implemented → observed. |
 | `US-001.audit.4.md` | **Real** | Blind session, round 4, audits v0.1.3. Verdict: `rejected`; effective verdict: `audited` via §8 overrides. 8 findings (1/4/3). |
 | `US-001.drift.1.md` | Fabricated | Scripted drift report. No real Phase 4 run. |
 
@@ -272,8 +282,7 @@ and behavior outside them as potential drift.
 
 - It does not prove the audit can approve a spec. It proves Phase 1 can
   close via the override mechanism after four rejections.
-- It does not prove Phase 2, 3, or 4 work. None of those phases has
-  been run yet.
+- It does not prove Phase 4 works. Phase 4 has not run yet.
 - It does not prove the audit produces approved specs on "reasonable"
   input. The input was a single endpoint with a single user story, and
   it produced 4 consecutive rejections; the Navigator, not the audit,
@@ -282,6 +291,9 @@ and behavior outside them as potential drift.
 What it does prove:
 
 - Phase 1b works: 4 real blind audits caught issues the author missed.
+- Phase 2 works: 5 tests derived from the audited spec pass, including
+  the stronger assertions promised by O3–O5.
+- Phase 3 works: all 4 §6 observations passed against a running server.
 - Fabrication is not a shortcut: `audit.1.FABRICATED.md` was strictly
   weaker than `audit.1.md` and missed the exact category round 4 would
   later flag.
@@ -301,7 +313,7 @@ pip install -r requirements.txt
 pytest tests/ -v
 ```
 
-7 tests pass. That is a sanity check on the code, not a validation of
+9 tests pass. That is a sanity check on the code, not a validation of
 Keel Nav. The methodology's correctness is measured by the audits above,
 not by running pytest.
 
