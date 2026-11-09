@@ -29,6 +29,11 @@ with the understanding that:
 
 ### Added
 
+- **Second real Goldfish audit** (`examples/todo-api/specs/US-001.audit.2.md`)
+  run blind on `v0.1.1`. Verdict: `rejected` with 3 blocking findings —
+  more blocking findings than round 1's audit of `v0.1.0` (2). Demonstrates
+  empirically that a fabricated correction against a fabricated audit
+  produces a spec that a real audit rejects more strongly, not less.
 - **`docs/known-limitations.md`** — consolidates the 11 live gaps across
   skills 03, 04, and 05. Each row lists the gap, its workaround, and
   (implicitly) the release where it might be addressed.
