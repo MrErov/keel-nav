@@ -1,26 +1,26 @@
 # Educational walkthrough: `todo-api`
 
-> ⚠️ **Constructed walkthrough, not a live run.**
+> ⚠️ **This is a constructed walkthrough, not a full live run.**
 >
-> The artifacts here (spec, audits, drift report) were **written after the
-> fact** to demonstrate the shape of each phase's output. They were not
-> produced by real Goldfish sessions running blind. The narrative shows
-> what the flow *looks like* when it works — it does not prove that the
-> flow *was executed* on this project.
+> **One artifact is real.** `specs/US-001.audit.1.md` is the output of
+> a real, blind Goldfish session run on 2026-11-08 in a fresh OpenCode
+> session (verdict: `rejected`, 10 findings: 2 blocking, 5 warning,
+> 3 info). Every other artifact — the revised spec (`US-001.spec.md`,
+> v0.1.1), `audit.2.md`, and `drift.1.md` — is fabricated to show the
+> shape of the output. `US-001.audit.1.FABRICATED.md` is preserved
+> alongside the real one for direct comparison.
 >
-> If you want a live, unfabricated example of Keel Nav in action, run it
-> yourself on your own project. If you want to see a real audit cycle
-> with provenance (fresh sessions, real findings, real corrections),
-> consult [`docs/designs/`](../../docs/designs/) — those are retrospective
-> design specs of decisions actually made in this repo's development,
-> not walkthroughs.
+> See **"A note on fabrication"** at the bottom of this README for the
+> provenance of each file.
 >
 > **What this walkthrough IS useful for:** understanding the shape of
-> each artifact in ~5 minutes, before you generate your own.
+> each artifact in ~5 minutes, and seeing the difference between a real
+> blind audit and a fabricated one.
 >
-> **What it is NOT useful for:** proving the methodology works, arguing
-> that the audits are real, or serving as a template you can copy without
-> running the flow yourself.
+> **What it is NOT useful for:** proving the methodology works end to
+> end. Only Phase 1b was executed for real. Phases 2, 3, and 4 were not
+> run, and the fabricated downstream artifacts are walkthrough
+> illustrations, not evidence.
 
 ---
 
@@ -72,6 +72,12 @@ The two audit rounds are the point. Most frameworks produce a spec and
 stop. Keel Nav's claim is that a spec is not ready until it has survived
 a hostile read.
 
+> **Provenance note for this read order:** Step 3 (`US-001.audit.1.md`)
+> is a real blind Goldfish run. Step 5 (`US-001.audit.2.md`) is
+> fabricated — it is not a response to the real audit, and no second
+> real Goldfish session was run. The "reject → fix → confirm" cycle
+> shows the *shape* of the flow; only the rejection is real output.
+
 ## Full directory map
 
 ```text
@@ -104,9 +110,13 @@ examples/todo-api/
    found a real contradiction between an AC and the contract. Without
    that finding, Phase 2 would have written tests against an
    underspecified endpoint.
-2. **The revision did not expand the spec.** Fixing the three findings
-   in `audit.1` made the existing sections more precise. Section 6 was
-   added later, during Phase 3 observation, as the template requires.
+2. **The revised spec is not longer than the original.** Fixing the
+   three findings in `audit.1.FABRICATED.md` did not add sections or
+   words; it made the existing sections more precise. The real audit
+   (`audit.1.md`) found 10 findings, and the fabricated `v0.1.1`
+   addresses the fabricated audit's findings, not the real audit's:
+   6 of the 10 real findings remain unaddressed. That is the gap
+   between the shape of a correction and a real one.
 3. **`src/todos.py` is the same in Phase 2 and Phase 3.** The logic
    doesn't change when the infrastructure changes. That is what
    "vertical slice wiring only" means in practice.
