@@ -116,6 +116,70 @@ examples/todo-api/
 5. **The tests mirror the spec exactly.** 3 ACs → 5 Phase 2 tests,
    plus 2 e2e tests for the 3 §6 observations. No more, no less.
 
+## A note on fabrication
+
+This walkthrough contains **six artifacts with four different kinds of
+provenance**. The README for each is honest about which is which; read
+this section before trusting any of them.
+
+| Artifact | Provenance | What it is |
+|----------|-----------|-----------|
+| `US-001.spec.v0.1.0.md` | Authored | The draft spec as it stood before audit. Audited once; verdict: `rejected`. |
+| `US-001.audit.1.md` | **Real** | The **first real Goldfish session** recorded in this walkthrough. Run blind on 2026-11-08, in a fresh OpenCode session, against `US-001.spec.v0.1.0.md`. Verdict: `rejected`. **10 findings** (2 blocking, 5 warning, 3 info). |
+| `US-001.audit.1.FABRICATED.md` | Fabricated | The original walkthrough version of the audit. Written by a human **after** knowing the answer. Verdict: `rejected`. **3 findings** (1 blocking, 2 warning, 0 info). Preserved only to show the difference. |
+| `US-001.audit.2.md` | Fabricated | A fabricated "approval" round written for the walkthrough. **It is not a response to the real audit.** It addresses the 3 findings of `audit.1.FABRICATED.md`, not the 10 findings of the real audit. No second real Goldfish session was run. |
+| `US-001.spec.md` (v0.1.1) | Fabricated correction | A human-authored rewrite of the spec, made **after** the real audit returned `rejected`. It is not a spec that a real Goldfish audited. It has `status: audited` and points to `audit.2.md` — both are walkthrough artifacts, not real audit outcomes. |
+| `US-001.drift.1.md` | Fabricated | A scripted drift report. No real Phase 4 run. |
+
+### Why both real and fabricated audits are preserved
+
+The real Goldfish found **10 findings**. The fabricated one found **3**.
+The fabricated one missed the contradiction between `T-4` (idempotency)
+and `§3.2` (one row per insert, autoincrement `id`). It missed the
+whitespace-normalization assumption in `AC-3`. It missed that `T-1` and
+`T-5` can pass on incorrect stored values. It missed the structural gap
+where the spec jumps from `§4` to `§7` with no `§5`/`§6`.
+
+It was **systematically too gentle**, in exactly the way confirmation
+bias predicts: the human who wrote it could only see what the spec
+*said*. The Goldfish, reading blind, could see what the spec *did not
+say*.
+
+Both audits are in this directory so a reader can verify the difference
+themselves. **A real blind audit is not a stricter re-read of a spec —
+it is a different kind of audit.** This is what Skill 02 is for.
+
+### What this walkthrough does *not* prove
+
+- It does **not** prove that Phase 1b approves a corrected spec. Only
+  one real audit ran, and it ran on the unrevised draft.
+- It does **not** prove that Phases 2, 3, or 4 work as written. The
+  downstream artifacts (`spec.md` v0.1.1, `audit.2.md`, `drift.1.md`)
+  are fabricated corrections of a real audit, not real runs.
+- It is **one** data point about **one** phase. The retro of v0.2.0
+  says the gap is "no real Goldfish" — that gap is now "one real
+  Goldfish, on one spec, in one phase." The rest is still open.
+
+### How to add a real second round yourself
+
+To see a real `audit.2.md`, first rename the existing fabricated
+`US-001.audit.2.md` to `US-001.audit.2.FABRICATED.md` so the new round
+does not overwrite it. Then open a fresh OpenCode session (no memory of
+this conversation) and run:
+
+```text
+Lee .meta-skills/02-egm-goldfish-audit.md y ejecuta Phase 1b.
+Inputs:
+spec_path: examples/todo-api/specs/US-001.spec.md
+context_doc: examples/todo-api/docs/context/todos.md
+audit_round: 2
+```
+
+If the second round returns `audited`, that is a real second data point.
+If it returns `rejected` with new findings, that is more useful still —
+it means the "correction" in `v0.1.1` did not close what the real audit
+opened. Commit the result next to `audit.1.md` and update this section.
+
 ## Running the code (not the methodology)
 
 The code in `src/` and `tests/` is real, runnable Python. You can verify
