@@ -65,6 +65,16 @@ with the understanding that:
   in the walkthrough, and it closes via the override mechanism, not via
   approval. The 3 warning overrides (W2, W3, W4) shift precision from
   the spec to the test suite, which will be verified in Phase 2.
+- **Phase 2 executed against v0.1.3.** `tests/test_todos.py` rewritten to
+  use the HTTP layer (TestClient) instead of calling `create_todo`
+  directly, matching v0.1.3's "integration" typing. Strong assertions per
+  Navigator overrides O3-O5: T-1 asserts `id` matches the persisted row
+  and `created_at` is fresh (< 60s); T-2 and T-3 assert the exact
+  `error == "title_required"` code. All 5 tests pass against the existing
+  `src/todos.py` and `src/main.py`. **Note:** the code predates the tests
+  by several rounds, so TDD's RED-first ordering is not verifiable in this
+  walkthrough. The tests are spec-derived, not code-derived, and are
+  demonstrably non-tautological against the assertions O3-O5 add.
 
 ### Removed
 
