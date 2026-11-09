@@ -75,6 +75,14 @@ with the understanding that:
   by several rounds, so TDD's RED-first ordering is not verifiable in this
   walkthrough. The tests are spec-derived, not code-derived, and are
   demonstrably non-tautological against the assertions O3-O5 add.
+- **Phase 3 test scaffolding** — `tests/conftest.py` (fixes `pytest` path
+  resolution: plain `pytest tests/` now works without `python -m`),
+  `tests/test_e2e.py` rewritten to cover the 4 observations in v0.1.3 §6
+  (id monotonicity, created_at distinct across seconds, 422 has no id,
+  response time informational). **No `src/` changes needed:** the app was
+  already wired to file-backed SQLite via `src/db.get_conn`. Phase 3's
+  "wiring" was done in Phase 2 for this project; the boundary between
+  phases is the §6 observations, not the infrastructure.
 
 ### Removed
 
