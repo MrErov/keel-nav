@@ -5,7 +5,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)]()
 [![Agnostic](https://img.shields.io/badge/compatible-opencode%20%7C%20claude--code%20%7C%20cursor%20%7C%20copilot%20%7C%20gemini-green)]()
-[![Status](https://img.shields.io/badge/status-v0.1--alpha-orange)]()
+[![Status](https://img.shields.io/badge/status-v0.4.0--beta-yellow)]()
 
 ---
 
@@ -20,6 +20,19 @@ Three roles, one discipline:
 | **Keel** | This repo | The structural spine that keeps the ship upright when the sea gets rough. |
 
 `Keel Nav` is the keel. It gives the Helmsman a protocol and the Navigator a rudder. Without it, autonomous agents drift into vibe coding, context rot, and token burn.
+
+---
+
+## Proven in production
+
+Keel Nav is not a theoretical framework. It was recently executed end-to-end on a production Odoo + LangGraph repository (`contafis-assistant`). 
+
+* **Phase 0** passively discovered a *fail-open* security vulnerability.
+* **Phase 1b** (Goldfish) rejected the first spec due to a logical contradiction.
+* **Phase 2** (TDD) implemented the fix, resulting in 13 new tests and 0 regressions (699 total green tests).
+* **Phase 4** (Drift) certified the implementation as `no-drift`.
+
+Read the full [Case Study](docs/case-studies/001-contafis-assistant.md).
 
 ---
 
@@ -113,12 +126,14 @@ keel-nav/
 │   │   ├── effective-verdict.md
 │   │   ├── blind-audit-protocol.md
 │   │   └── skill-compression.md
+│   ├── case-studies/                ✅ v0.4.0-beta
+│   │   └── 001-contafis-assistant.md
 │   └── known-limitations.md         ✅ post-v0.2.0-alpha
 ├── examples/                        # Educational artifacts
 │   └── todo-api/                    ✅ post-v0.2.0-alpha (constructed walkthrough)
 ├── AGENTS.md                        ✅ Canonical AI behavioral contract
 ├── CONTRIBUTING.md                  ✅ Contribution protocol
-├── CHANGELOG.md                     ✅ v0.2.0-alpha
+├── CHANGELOG.md                     ✅ v0.4.0-beta
 ├── LICENSE                          ✅ MIT
 ├── .gitignore                       ✅
 └── README.md                        ✅

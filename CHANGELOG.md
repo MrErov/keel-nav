@@ -18,6 +18,15 @@ with the understanding that:
 
 Nothing yet.
 
+## [0.4.0-beta] - 2026-11-09
+
+### Added
+- **Case Study 001:** `contafis-assistant`. First end-to-end execution of Keel Nav on a real production repository. The methodology successfully caught a fail-open security bug and implemented the fix via TDD with zero regressions (699 green tests) and zero drift.
+
+### Changed
+- **Project status:** Keel Nav has transitioned from `alpha` to `beta`. The 5-phase core workflow (SDD + Goldfish + TDD + ODD + Drift) is now validated for both greenfield (`todo-api`) and brownfield (`contafis-assistant`) projects. The framework is ready for broader adoption across multiple repositories.
+- **README:** Added "Proven in production" section.
+
 ## [0.3.0-alpha] - 2026-11-09
 
 ### Added
@@ -197,7 +206,8 @@ Nothing yet.
   detection, complexity thresholds, dependency audit, override retirement,
   cross-context drift. All out of scope for v0.1.0.
 
-[Unreleased]: https://github.com/MrErov/keel-nav/compare/v0.3.0-alpha...HEAD
+[Unreleased]: https://github.com/MrErov/keel-nav/compare/v0.4.0-beta...HEAD
+[0.4.0-beta]: https://github.com/MrErov/keel-nav/releases/tag/v0.4.0-beta
 [0.3.0-alpha]: https://github.com/MrErov/keel-nav/releases/tag/v0.3.0-alpha
 [0.2.0-alpha]: https://github.com/MrErov/keel-nav/releases/tag/v0.2.0-alpha
 [0.1.0-alpha]: https://github.com/MrErov/keel-nav/releases/tag/v0.1.0-alpha
