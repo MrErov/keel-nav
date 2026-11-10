@@ -1,15 +1,80 @@
-# Keel Nav
+<div align="center">
+  <h1>⚓ Keel Nav</h1>
+  <p><strong>The structural keel for AI-assisted engineering.</strong><br>
+  <em>Without it, you drift.</em></p>
 
-> The structural keel for AI-assisted engineering.
-> Without it, you drift.
-
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)]()
-[![Agnostic](https://img.shields.io/badge/compatible-opencode%20%7C%20claude--code%20%7C%20cursor%20%7C%20copilot%20%7C%20gemini-green)]()
-[![Status](https://img.shields.io/badge/status-v0.4.0--beta-yellow)]()
+  <p>
+    <a href="https://github.com/MrErov/keel-nav/releases"><img src="https://img.shields.io/github/v/release/MrErov/keel-nav?color=blue" alt="Release"></a>
+    <a href="https://github.com/MrErov/keel-nav/blob/main/LICENSE"><img src="https://img.shields.io/github/license/MrErov/keel-nav?color=green" alt="License"></a>
+    <a href="https://github.com/MrErov/keel-nav"><img src="https://img.shields.io/badge/status-beta-yellow" alt="Status"></a>
+    <a href="https://github.com/MrErov/keel-nav"><img src="https://img.shields.io/badge/compatible-opencode%20%7C%20claude%20%7C%20cursor%20%7C%20gemini-blue" alt="Compatibility"></a>
+  </p>
+</div>
 
 ---
 
-## The metaphor (and the method)
+## 📖 Table of Contents
+- [🧠 The Problem](#-the-problem)
+- [🛠️ The Solution: 5 Phases](#%EF%B8%8F-the-solution-5-phases)
+- [🏭 Proven in Production](#-proven-in-production)
+- [🚀 Quick Start](#-quick-start)
+- [🔌 Harness Compatibility](#-harness-compatibility)
+- [📚 Meta-skill Reference](#-meta-skill-reference)
+- [⚖️ How Keel Nav Compares](#%EF%B8%8F-how-keel-nav-compares)
+- [💰 Token Economics](#-token-economics)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
+---
+
+## 🧠 The Problem
+
+AI-assisted engineering has split into two unsustainable extremes:
+
+1. **Vibe coding** — loose prompts, no spec, no tests. Silent technical debt compounds until the project capsizes.
+2. **Mega-frameworks of autonomous sub-agents** — orchestrators that burn tokens, degrade context ("context rot"), and produce over-engineered code that nobody can audit.
+
+Both fail at the same point: **the human stops being the Navigator** and becomes a spectator to an opaque, expensive process.
+
+---
+
+## 🛠️ The Solution: 5 Phases
+
+Five phases. Each phase is a single meta-skill in pure Markdown. **Human commands, AI executes within bounds.**
+
+| Phase | Name | Goal | Meta-skill |
+|-------|------|------|------------|
+| 0 | **Context Bootstrap** | Map the repo before planning (Elephant Memory) | `00-context-bootstrap.md` |
+| 1 | **Lightweight SDD + Goldfish Audit** | Specs per User Story + blind anti-bias audit | `01-sdd-spec-writer.md`, `02-egm-goldfish-audit.md` |
+| 2 | **Strict TDD** | Red → Green → Refactor with minimal code | `03-tdd-cycle.md` |
+| 3 | **ODD & Vertical Slices** | DB → API → UI, one slice at a time | `04-odd-vertical-slice.md` |
+| 4 | **Drift Control** | Final audit against the original spec | `05-drift-control.md` |
+
+```mermaid
+flowchart LR
+    P0[Phase 0: Context] --> P1[Phase 1: Spec + Goldfish]
+    P1 --> P2[Phase 2: Strict TDD]
+    P2 --> P3[Phase 3: ODD Vertical Slice]
+    P3 --> P4[Phase 4: Drift Control]
+
+    style P0 fill:#e1f5fe,stroke:#0288d1
+    style P1 fill:#fff9c4,stroke:#fbc02d
+    style P2 fill:#e8f5e9,stroke:#388e3c
+    style P3 fill:#f3e5f5,stroke:#8e24aa
+    style P4 fill:#ffebee,stroke:#d32f2f
+```
+
+---
+
+## 🏭 Proven in Production
+
+> 🏆 **Battle-tested on a real Odoo + LangGraph codebase.**  
+> Keel Nav recently caught a *fail-open security vulnerability* in a production repository, enforced a logical audit (Goldfish), and implemented the fix with **699 green tests and zero regressions**.  
+> [Read the Case Study](./docs/case-studies/001-contafis-assistant.md)
+
+---
+
+## 🏷️ The Metaphor (and the Method)
 
 Three roles, one discipline:
 
@@ -23,52 +88,7 @@ Three roles, one discipline:
 
 ---
 
-## Proven in production
-
-Keel Nav is not a theoretical framework. It was recently executed end-to-end on a production Odoo + LangGraph repository (`contafis-assistant`). 
-
-* **Phase 0** passively discovered a *fail-open* security vulnerability.
-* **Phase 1b** (Goldfish) rejected the first spec due to a logical contradiction.
-* **Phase 2** (TDD) implemented the fix, resulting in 13 new tests and 0 regressions (699 total green tests).
-* **Phase 4** (Drift) certified the implementation as `no-drift`.
-
-Read the full [Case Study](docs/case-studies/001-contafis-assistant.md).
-
----
-
-## The problem
-
-AI-assisted engineering has split into two unsustainable extremes:
-
-1. **Vibe coding** — loose prompts, no spec, no tests. Silent technical debt compounds until the project capsizes.
-2. **Mega-frameworks of autonomous sub-agents** — orchestrators that burn tokens, degrade context ("context rot"), and produce over-engineered code that nobody can audit.
-
-Both fail at the same point: **the human stops being the Navigator** and becomes a spectator to an opaque, expensive process.
-
-## The solution: Keel Nav
-
-Five phases. Each phase is a single meta-skill in pure Markdown. **Human commands, AI executes within bounds.**
-
-| Phase | Name | Goal | Meta-skill |
-|-------|------|------|------------|
-| 0 | **Context Bootstrap** | Map the repo before planning (Elephant Memory) | `00-context-bootstrap.md` |
-| 1 | **Lightweight SDD + Goldfish Audit** | Specs per User Story + blind anti-bias audit | `01-sdd-spec-writer.md`, `02-egm-goldfish-audit.md` |
-| 2 | **Strict TDD** | Red → Green → Refactor with minimal code | `03-tdd-cycle.md` |
-| 3 | **ODD & Vertical Slices** | DB → API → UI, one slice at a time | `04-odd-vertical-slice.md` |
-| 4 | **Drift Control** | Final audit against the original spec | `05-drift-control.md` |
-
-```
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│  Phase 0    │──▶│  Phase 1    │──▶│  Phase 2    │──▶│  Phase 3    │──▶│  Phase 4    │
-│  Context    │   │  SDD +      │   │  Strict     │   │  ODD        │   │  Drift      │
-│  Bootstrap  │   │  Goldfish   │   │  TDD        │   │  Vertical   │   │  Check      │
-└─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘
-      │               │               │               │               │
-  Elephant         Goldfish        Minimal code    Observation     Non-drift
-  Memory           (blind)         (no over-eng.)  (human-in-loop) certificate
-```
-
-## Principles
+## ⚓ Principles
 
 1. **Human = Navigator.** The AI never decides *what*; only *how*, within bounds.
 2. **Truly agnostic.** Pure Markdown. No SDK, no proprietary YAML, no lock-in.
@@ -79,26 +99,23 @@ Five phases. Each phase is a single meta-skill in pure Markdown. **Human command
 7. **Spec ↔ code traceability.** The Drift Check certifies both match.
 8. **Context rot prevention.** Per-directory context docs, regenerable and versioned.
 
-## For AI agents
+---
+
+## 🤖 For AI Agents
 
 If you are an AI agent reading this README before acting inside this repo:
 
-1. **Stop.** Read [`AGENTS.md`](./AGENTS.md) first. It is the canonical
-   behavioral contract. It overrides any harness-specific file
-   (`CLAUDE.md`, `.cursorrules`, `harnesses/*`).
-2. **Do not vibe-code.** `AGENTS.md` §5 enumerates what counts as a
-   blocking violation. The short version: no spec → no code.
-3. **Respect phase boundaries.** `AGENTS.md` §4 and §6. You write only
-   the outputs declared by the current phase's meta-skill.
-4. **Respect token budgets.** `AGENTS.md` §7. If you exceed 150% of a
-   skill's declared budget, stop and report.
+1. **Stop.** Read [`AGENTS.md`](./AGENTS.md) first. It is the canonical behavioral contract. It overrides any harness-specific file (`CLAUDE.md`, `.cursorrules`, `harnesses/*`).
+2. **Do not vibe-code.** `AGENTS.md` §5 enumerates what counts as a blocking violation. The short version: no spec → no code.
+3. **Respect phase boundaries.** `AGENTS.md` §4 and §6. You write only the outputs declared by the current phase's meta-skill.
+4. **Respect token budgets.** `AGENTS.md` §7. If you exceed 150% of a skill's declared budget, stop and report.
 5. **If a rule is ambiguous, escalate.** `AGENTS.md` §9 has the format.
 
-This section is a doorway, not a copy. The authoritative text lives in
-`AGENTS.md`, and it is the only file that may be edited to change agent
-behavior.
+This section is a doorway, not a copy. The authoritative text lives in `AGENTS.md`, and it is the only file that may be edited to change agent behavior.
 
-## Repository structure
+---
+
+## 📁 Repository Structure
 
 ```
 keel-nav/
@@ -139,11 +156,11 @@ keel-nav/
 └── README.md                        ✅
 ```
 
-> **Legend:** ✅ = shipped. The version in parentheses is the release
-> where the file landed. Items marked `post-v0.2.0-alpha` are on `main`
-> but not in a tagged release.
+> **Legend:** ✅ = shipped. The version in parentheses is the release where the file landed. Items marked `post-v0.2.0-alpha` are on `main` but not in a tagged release.
 
-## Quick Start
+---
+
+## 🚀 Quick Start
 
 ```bash
 # 1. Clone
@@ -162,7 +179,9 @@ cp -r .meta-skills /path/to/your-project/
 
 No installer. No `npm i`. Just text your LLM can read.
 
-## Harness compatibility
+---
+
+## 🔌 Harness Compatibility
 
 | Harness | Mechanism | Location |
 |---------|-----------|----------|
@@ -172,20 +191,13 @@ No installer. No `npm i`. Just text your LLM can read.
 | Copilot CLI / Gemini CLI / Web LLMs | Pasted prompt | `harnesses/generic/prompts/*.md` |
 | **DeepSeek Harness** | Via [`dsh-bridges`](https://github.com/deepseek-ai/dsh-bridges) (auto-detects the adapters above) | No install; `dsh-bridges` reads OpenCode / Claude Code / Cursor layouts |
 
-Each harness is a **thin entry point** that points at `.meta-skills/`, not a
-fork. Two shapes: per-phase shims (≤50 lines each, e.g. OpenCode) and
-persistent directive files (≤250 lines total, e.g. Claude Code, Cursor).
-Neither embeds the protocol.
+Each harness is a **thin entry point** that points at `.meta-skills/`, not a fork. Two shapes: per-phase shims (≤50 lines each, e.g. OpenCode) and persistent directive files (≤250 lines total, e.g. Claude Code, Cursor). Neither embeds the protocol.
 
-> **Why DeepSeek appears as a bridge and not a directory:** `dsh-bridges`
-> is a community plugin that reads existing Claude Code / OpenCode / Cursor
-> adapter layouts. Keel Nav doesn't need a `harnesses/deepseek/` directory —
-> the other adapters are shipped, and `dsh-bridges` picks them up. See
-> [`harnesses/dsh-bridges/`](harnesses/dsh-bridges/) for the integration
-> notes.
-> That is Keel Nav's agnosticism working as intended.
+> **Why DeepSeek appears as a bridge and not a directory:** `dsh-bridges` is a community plugin that reads existing Claude Code / OpenCode / Cursor adapter layouts. Keel Nav doesn't need a `harnesses/deepseek/` directory — the other adapters are shipped, and `dsh-bridges` picks them up. See [`harnesses/dsh-bridges/`](harnesses/dsh-bridges/) for the integration notes. That is Keel Nav's agnosticism working as intended.
 
-## Meta-skill reference
+---
+
+## 📚 Meta-skill Reference
 
 | Skill | Phase | Input | Output | Tokens (est.) |
 |-------|-------|-------|--------|---------------|
@@ -196,7 +208,9 @@ Neither embeds the protocol.
 | `04-odd-vertical-slice` | 3 | Spec + tests | DB → API → UI | 4k–10k |
 | `05-drift-control` | 4 | Spec + code | `drift-report.md` | 2k–3k |
 
-## How Keel Nav compares
+---
+
+## ⚖️ How Keel Nav Compares
 
 | Project | What we take | What we avoid |
 |---------|--------------|---------------|
@@ -206,7 +220,9 @@ Neither embeds the protocol.
 | `open-gsd/gsd-core` | Phase structure | Runtime dependency |
 | **Keel Nav** | Strict TDD + ODD vertical slices | — |
 
-## Token economics
+---
+
+## 💰 Token Economics
 
 Our thesis: token spend is a symptom of design, not of scale.
 
@@ -215,24 +231,21 @@ Our thesis: token spend is a symptom of design, not of scale.
 - Per-directory context avoids resending the full tree every turn.
 - Drift Check catches deviations early → avoids costly rewrites.
 
-## Contributing
+---
 
-Keel Nav is small by design, and contributions are judged by **clarity,
-cost control, and harness agnosticism** — not by lines of code. The full
-protocol lives in [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+## 🤝 Contributing
+
+Keel Nav is small by design, and contributions are judged by **clarity, cost control, and harness agnosticism** — not by lines of code. The full protocol lives in [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 Quick summary:
 
-- **Meta-skill changes** require an issue labeled `accepted-for-pr` before
-  a PR opens. Unstable meta-skills are worse than no meta-skills.
-- **Harness adapters** are thin entry points that point to `AGENTS.md` and
-  `.meta-skills/` — never forks. Two shapes: per-phase shims (≤50 lines
-  each) and persistent directive files (≤250 lines total). Neither embeds
-  the protocol.
+- **Meta-skill changes** require an issue labeled `accepted-for-pr` before a PR opens. Unstable meta-skills are worse than no meta-skills.
+- **Harness adapters** are thin entry points that point to `AGENTS.md` and `.meta-skills/` — never forks. Two shapes: per-phase shims (≤50 lines each) and persistent directive files (≤250 lines total). Neither embeds the protocol.
 - **No external dependencies** inside `.meta-skills/`. Pure Markdown only.
-- **Every PR** declares its token impact (`before`, `after`, `delta`,
-  justification).
+- **Every PR** declares its token impact (`before`, `after`, `delta`, justification).
 
-## License
+---
+
+## 📄 License
 
 MIT — because methodological knowledge should not have lock-in.
