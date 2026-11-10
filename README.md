@@ -57,11 +57,11 @@ flowchart LR
     P2 --> P3[Phase 3: ODD Vertical Slice]
     P3 --> P4[Phase 4: Drift Control]
 
-    style P0 fill:#e1f5fe,stroke:#0288d1
-    style P1 fill:#fff9c4,stroke:#fbc02d
-    style P2 fill:#e8f5e9,stroke:#388e3c
-    style P3 fill:#f3e5f5,stroke:#8e24aa
-    style P4 fill:#ffebee,stroke:#d32f2f
+    style P0 fill:#e1f5fe,stroke:#0288d1,color:#000
+    style P1 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style P2 fill:#e8f5e9,stroke:#388e3c,color:#000
+    style P3 fill:#f3e5f5,stroke:#8e24aa,color:#000
+    style P4 fill:#ffebee,stroke:#d32f2f,color:#000
 ```
 
 ---
