@@ -16,7 +16,10 @@ with the understanding that:
 
 ## [Unreleased]
 
-Nothing yet.
+### Added
+
+- **Recommended Tooling section in README:** Added Graphify and Obsidian as optional accelerators for Phase 0 (Code Knowledge Graphs). This enhances the brownfield mapping experience without breaking the framework's agnostic, no-lock-in philosophy.
+- **Optional Accelerator note in `00-context-bootstrap.md`:** The AI is now instructed to use Graphify's output to jumpstart the dependency map if the user has it installed.
 
 ## [0.4.0-beta] - 2026-11-09
 

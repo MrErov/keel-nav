@@ -199,6 +199,19 @@ Each harness is a **thin entry point** that points at `.meta-skills/`, not a for
 
 ---
 
+## 🧰 Recommended Tooling (Optional)
+
+Keel Nav is designed to be 100% pure Markdown with zero lock-in. However, it plays beautifully with modern developer tools that can accelerate specific phases:
+
+| Tool | Phase | How it helps |
+|------|-------|--------------|
+| [**Graphify**](https://github.com/Graphify-Labs/graphify) | Phase 0 | Builds a deterministic Code Knowledge Graph of your repo. You can export it to **Obsidian** (`.canvas` files) to visually explore your architecture before writing specs, drastically reducing Phase 0 token consumption on large codebases. |
+| [**Obsidian**](https://obsidian.md/) | Phase 0 & 1 | Perfect for visualizing the output of Graphify and managing your `docs/context/` and `specs/` as a personal knowledge vault. |
+
+*Note: These tools are entirely optional. Keel Nav does not depend on them, and you can execute the entire 5-phase methodology using nothing but notepad and an LLM.*
+
+---
+
 ## 📚 Meta-skill Reference
 
 | Skill | Phase | Input | Output | Tokens (est.) |

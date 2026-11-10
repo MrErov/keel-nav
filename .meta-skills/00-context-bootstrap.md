@@ -54,6 +54,9 @@ You are **forbidden** to:
 
 ### Step 1 — Passive reconnaissance (cost: ~500 tokens)
 
+> **🚀 Optional Accelerator (Graphify & Obsidian):**
+> If the repository is large (>10k lines) and you have [Graphify](https://github.com/Graphify-Labs/graphify) installed, you can run `graphify extract` (or export to Obsidian via `graphify export obsidian`) *before* executing this step. Graphify builds a deterministic Code Knowledge Graph that instantly reveals module dependencies and architecture. You can use its output to jumpstart the `01-dependency-map.md` generation, saving massive token costs. **Keel Nav works perfectly without this tool, but uses it if available.**
+
 1. List the directory tree to depth 3 (`tree -L 3 -I 'node_modules|.git|dist|build'`).
 2. Locate manifests: `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, `pom.xml`, `composer.json`, `Gemfile`, `*.csproj`.
 3. Locate framework signals: `next.config.*`, `vite.config.*`, `django/`, `rails/`, `fastapi`, `spring/`, `Dockerfile`, `docker-compose.yml`.
