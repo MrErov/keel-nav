@@ -1,4 +1,6 @@
 <div align="center">
+  <img src="docs/assets/banner.png" alt="Keel Nav Logo" width="600">
+  <br><br>
   <h1>⚓ Keel Nav</h1>
   <p><strong>The structural keel for AI-assisted engineering.</strong><br>
   <em>Without it, you drift.</em></p>
