@@ -184,4 +184,30 @@ may **not** self-modify this file within a session.
 
 ---
 
+## 12. Keel Nav Workflow (comandos `/keel-*`)
+
+### 5 fases y sus comandos
+
+| Fase | Nombre | Comando | Sub-agente orquestado | Salida clave |
+|------|--------|---------|----------------------|--------------|
+| 0 | Context Bootstrap | `/keel-context` | `@explore` | `docs/context/` (overview, dependency-map, risk-register, contextos) |
+| 1 | SDD + Goldfish | `/keel-spec` | `@planner` → `@reviewer` | `specs/<US-ID>.spec.md` + `specs/<US-ID>.audit.<N>.md` |
+| 2 | TDD | `/keel-tdd` | `@implementer` | tests + código de producción (RED→GREEN→REFACTOR) |
+| 3 | Vertical Slice / ODD | `/keel-slice` | `@implementer` + MCP Chrome | slice cableado + tests E2E |
+| 4 | Drift Control | `/keel-drift` | `@reviewer` | `drift-report.md` |
+
+### Reglas duras (no negociables)
+
+1. **No test, no feature:** no se escribe código de producción sin el test correspondiente declarado en el plan de tests de la spec (Fases 2 y 3).
+2. **Presupuesto de tokens:** cada fase declara su `estimated_tokens`; si se supera el 150%, detener y reportar al Navigator (opciones: dividir alcance, aceptar sobrecosto o abortar).
+3. **Trazabilidad:** cada cambio de código debe rastrearse hasta una spec (`specs/<US-ID>.spec.md`) y su auditoría Goldfish; sin spec auditada no hay implementación.
+4. **Comandos solo-lectura:** los comandos `/keel-*` orquestan y generan únicamente los artefactos declarados como salida de la fase en curso; nunca modifican archivos fuera de esas salidas.
+
+### Comandos legacy
+
+- `/feature` y `/phase-new`: marcados como **legacy**. Usar el flujo `/keel-*` en su lugar.
+- Los comandos `/sdd-*` se mantienen como comandos de bajo nivel (no deprecados).
+
+---
+
 *Keel Nav — the structural keel for AI-assisted engineering. Without it, you drift.*
