@@ -191,7 +191,7 @@ No installer. No `npm i`. Just text your LLM can read.
 | Claude Code | `CLAUDE.md` + directives | `harnesses/claude-code/CLAUDE.md` |
 | Cursor | `.cursorrules` | `harnesses/cursor/.cursorrules` |
 | Copilot CLI / Gemini CLI / Web LLMs | Pasted prompt | `harnesses/generic/prompts/*.md` |
-| **DeepSeek Harness** | Native Plugin (UI dashboard) | `harnesses/deepseek-harness/` |
+| **DeepSeek Harness** | Native UI Plugin with 1-click bootstrap | `harnesses/deepseek-harness/` |
 
 Each harness is a **thin entry point** that points at `.meta-skills/`, not a fork. Two shapes: per-phase shims (≤50 lines each, e.g. OpenCode) and persistent directive files (≤250 lines total, e.g. Claude Code, Cursor). Neither embeds the protocol.
 
