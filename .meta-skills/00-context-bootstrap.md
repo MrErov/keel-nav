@@ -234,6 +234,25 @@ Agent: runs steps 1–6 with `optional_scope = src/billing/` and produces
 only `docs/context/billing.md` + the corresponding entries in overview,
 dependency-map, and risk-register.
 
+### Step 7 — Continuous Maintenance (Optional)
+
+If the Navigator requests it, the agent may maintain two additional files in
+`docs/context/` to prevent **context rot** in long-lived projects:
+
+- **`index.md`** — A catalog of all specs (`US-xxx`) with their current state
+  (`draft`, `audited`, `certified`). Updated whenever a spec transitions state.
+- **`log.md`** — A chronological event log (e.g. `2026-11-17: Phase 4 certified
+  for US-001`). Append-only; never rewrite history.
+
+These files implement the **"LLM Wiki" pattern** (inspired by Andrej Karpathy):
+the AI maintains a living index and log in Markdown so that context remains
+navigable across sessions and contributors without re-reading the entire repo.
+
+> **Optional:** The agent can also perform a `context-lint` — a contradiction
+> check across `docs/context/` — if the Navigator asks. This scans for
+> inconsistent states (e.g., a spec marked `certified` in `index.md` but missing
+> a drift report).
+
 ## Handoff to Phase 1
 
 On close, the AI must emit a 3-line message:

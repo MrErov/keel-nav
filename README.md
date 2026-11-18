@@ -212,6 +212,27 @@ Keel Nav is designed to be 100% pure Markdown with zero lock-in. However, it pla
 
 ---
 
+### 🧹 Context Maintenance (The Karpathy Pattern)
+
+Keel Nav adopts the **"LLM Wiki" pattern** (inspired by Andrej Karpathy) for
+long-lived projects. The AI can optionally maintain two files in `docs/context/`
+to prevent **context rot**:
+
+| File | Purpose |
+|------|---------|
+| `index.md` | Catalog of all specs (`US-xxx`) with their state (`draft` / `audited` / `certified`). |
+| `log.md` | Chronological event log (e.g. `2026-11-17: Phase 4 certified for US-001`). Append-only. |
+
+The agent can also perform a **`context-lint`** on demand: a contradiction check
+across `docs/context/` (e.g., a spec marked `certified` in `index.md` but
+missing a drift report).
+
+> **Optional capability.** This is not part of the 5 mandatory phases. It is an
+> opt-in pattern for projects that span many sessions or contributors, where
+> re-reading the full context on every turn becomes impractical.
+
+---
+
 ## 📚 Meta-skill Reference
 
 | Skill | Phase | Input | Output | Tokens (est.) |

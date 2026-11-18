@@ -20,6 +20,7 @@ with the understanding that:
 
 - **Recommended Tooling section in README:** Added Graphify and Obsidian as optional accelerators for Phase 0 (Code Knowledge Graphs). This enhances the brownfield mapping experience without breaking the framework's agnostic, no-lock-in philosophy.
 - **Optional Accelerator note in `00-context-bootstrap.md`:** The AI is now instructed to use Graphify's output to jumpstart the dependency map if the user has it installed.
+- **Context Maintenance (The Karpathy Pattern):** Optional `index.md` (spec catalog with states) and `log.md` (chronological event log) in `docs/context/`, plus on-demand `context-lint` for contradiction detection. Inspired by Andrej Karpathy's "LLM Wiki" pattern for long-lived projects. Implemented as Step 7 in `00-context-bootstrap.md` and documented in README.
 
 ## [0.4.0-beta] - 2026-11-09
 
