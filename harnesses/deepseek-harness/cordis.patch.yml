@@ -1,0 +1,4 @@
+- insert:
+    - id: keel-nav
+      name: '@local/keel-nav'
+      config: {}
