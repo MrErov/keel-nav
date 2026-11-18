@@ -30,6 +30,8 @@ window.__ModuleLoader__.load({
       readError: 'read error',
       quickActions: 'Quick actions',
       quickActionsHint: 'They only send a prompt to the agent; this plugin never modifies files.',
+      installKeelNav: 'Install Keel Nav in this project',
+      installKeelNavHint: 'No .meta-skills/ folder was found. Send the installation prompt to the active chat.',
       phase0: 'Start Phase 0 (Context Bootstrap)',
       phase0Hint: 'Map repository context, dependencies, and risks.',
       phase1a: 'Start Phase 1a (Write Spec)',
@@ -76,6 +78,8 @@ window.__ModuleLoader__.load({
       readError: 'error de lectura',
       quickActions: 'Acciones rápidas',
       quickActionsHint: 'Solo envían un prompt al agente; este plugin nunca modifica archivos.',
+      installKeelNav: 'Instalar Keel Nav en este proyecto',
+      installKeelNavHint: 'No se encontró la carpeta .meta-skills/. Envía el prompt de instalación al chat activo.',
       phase0: 'Iniciar Fase 0 (Context Bootstrap)',
       phase0Hint: 'Mapea el contexto, las dependencias y los riesgos del repositorio.',
       phase1a: 'Iniciar Fase 1a (Escribir Spec)',
@@ -200,6 +204,24 @@ window.__ModuleLoader__.load({
       .keel-nav-action:disabled { color: var(--dsw-alias-label-secondary); background: var(--dsw-alias-bg-layer-1); }
       .keel-nav-action-title { display: block; font-size: 13px; font-weight: 650; line-height: 1.45; }
       .keel-nav-action-hint { display: block; margin-top: 8px; color: var(--dsw-alias-label-secondary); font-size: 12px; line-height: 1.45; }
+      .keel-nav-bootstrap {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0 0 18px;
+        padding: 18px 20px;
+        border-color: var(--dsw-alias-brand-primary);
+        background: var(--dsw-alias-brand-primary);
+        color: var(--dsw-alias-bg-base);
+        text-align: left;
+      }
+      .keel-nav-bootstrap:hover:not(:disabled) {
+        border-color: var(--dsw-alias-brand-primary);
+        box-shadow: 0 0 0 3px var(--dsw-alias-border-l2);
+      }
+      .keel-nav-bootstrap-title { font-size: 15px; font-weight: 650; line-height: 1.4; }
+      .keel-nav-bootstrap-hint { color: inherit; font-size: 12px; line-height: 1.5; opacity: 0.85; }
       .keel-nav-selected { margin: 0 0 13px; font-size: 12px; color: var(--dsw-alias-label-secondary); overflow-wrap: anywhere; }
       .keel-nav-selected code { color: var(--dsw-alias-label-primary); }
       .keel-nav-empty, .keel-nav-notice {
@@ -336,7 +358,7 @@ window.__ModuleLoader__.load({
     }
 
     function phaseRequiresSpec(phase) {
-      return !['0', '1a'].includes(phase);
+      return !['bootstrap', '0', '1a'].includes(phase);
     }
 
     function actionDisabled(phase, { sessionId, methodologyReady, busyPhase, selected }) {
@@ -345,6 +367,14 @@ window.__ModuleLoader__.load({
 
     function buildPrompt(phase, cwd, spec) {
       const root = workspaceLine(cwd);
+      if (phase === 'bootstrap') {
+        return 'Este proyecto no tiene Keel Nav instalado. Por favor, ejecuta los siguientes comandos en la terminal para instalarlo:\n' +
+          'git clone https://github.com/MrErov/keel-nav.git /tmp/keel-nav-temp\n' +
+          'cp -r /tmp/keel-nav-temp/.meta-skills .\n' +
+          'cp -r /tmp/keel-nav-temp/templates .\n' +
+          'rm -rf /tmp/keel-nav-temp\n' +
+          'Una vez instalado, avísame para poder iniciar la Fase 0.';
+      }
       if (phase === '0') {
         return 'Lee .meta-skills/00-context-bootstrap.md y ejecuta la Fase 0 para mapear este repositorio.';
       }
@@ -534,6 +564,15 @@ window.__ModuleLoader__.load({
               h('h2', { className: 'keel-nav-section-heading' }, t('quickActions')),
               h('p', { className: 'keel-nav-section-hint' }, t('quickActionsHint')),
               actionFailure && h('div', { className: 'keel-nav-notice keel-nav-notice-error', role: 'alert' }, actionFailure),
+              data.metaSkills.exists === false && h('button', {
+                type: 'button',
+                className: 'keel-nav-button keel-nav-bootstrap',
+                disabled: actionDisabled('bootstrap', { sessionId, methodologyReady, busyPhase, selected }),
+                title: t('installKeelNavHint'),
+                onClick: () => sendPhase('bootstrap'),
+              },
+              h('span', { className: 'keel-nav-bootstrap-title' }, busyPhase === 'bootstrap' ? t('sending') : t('installKeelNav')),
+              h('span', { className: 'keel-nav-bootstrap-hint' }, t('installKeelNavHint'))),
               h('p', { className: 'keel-nav-selected' }, `${t('selectedSpec')}: `,
                 selected ? h('code', null, selected.path) : '—'),
               !selected && h('p', { className: 'keel-nav-selected', role: 'note' }, t('selectSpecFirst')),
