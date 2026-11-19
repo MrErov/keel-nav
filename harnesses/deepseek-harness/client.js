@@ -384,7 +384,8 @@ window.__ModuleLoader__.load({
           'La plantilla obligatoria es `templates/spec.template.md`; la única salida permitida es `specs/<US-ID>.spec.md`.\n\n' +
           'Antes de escribir, valida las entradas y prerrequisitos de la meta-skill. Si falta la User Story, el US-ID o el `context_doc`, ' +
           'pídemelos como Navigator y no los inventes. Respeta los límites, la trazabilidad y todas las compuertas. ' +
-          'No escribas código ni tests, no ejecutes build/tests y no realices la auditoría Goldfish inline. Detente tras el handoff de la fase.';
+          'No escribas código ni tests, no ejecutes build/tests y no realices la auditoría Goldfish inline. Detente tras el handoff de la fase.' +
+          '\n\n*Nota de arquitectura:* Si tienes el servidor Graphify MCP conectado, úsalo para trazar las dependencias del repositorio antes de escribir el spec.';
       }
       if (phase === '1b') {
         return `${root}Quiero iniciar Keel Nav — Fase 1b (Auditoría Goldfish).\n\n` +
@@ -406,7 +407,8 @@ window.__ModuleLoader__.load({
         `Auditoría (\`audit_path\`): ${spec.auditPath ? `\`${spec.auditPath}\`` : 'no declarada; la compuerta debe detener la fase'}.\n\n` +
         'Lee y aplica `AGENTS.md` y la meta-skill. Verifica primero que la spec está `audited` o `approved`, que `goldfish_audit` apunta a un archivo existente ' +
         'y que el veredicto efectivo es `audited`. Si cualquier compuerta falla, detente y escala; no escribas código. ' +
-        'Si pasa, ejecuta estrictamente RED → GREEN → REFACTOR dentro del plan de tests y los contratos de la spec. No avances a ODD ni Drift Control.';
+        'Si pasa, ejecuta estrictamente RED → GREEN → REFACTOR dentro del plan de tests y los contratos de la spec. No avances a ODD ni Drift Control.' +
+        '\n\n*Nota de arquitectura:* Si tienes el servidor Graphify MCP conectado, úsalo para localizar patrones de tests existentes y trazar el call graph de las funciones objetivo antes de escribir los tests.';
     }
 
     function KeelNavIcon({ size, active }) {

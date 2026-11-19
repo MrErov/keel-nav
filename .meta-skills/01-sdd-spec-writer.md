@@ -87,6 +87,8 @@ optional_scope=<path> before writing this spec.
 
 ### Step 2 — Validate story readiness (cost: ~200 tokens)
 
+> 💡 Graphify MCP Accelerator: If a Graphify MCP server is connected, use its tools (like `get_dependencies` or `search_code`) to understand the codebase and interfaces instead of reading multiple files.
+
 Before opening the template, answer these internally. Any "no" is a hard stop.
 
 - [ ] The story has a clear **role** (who), **capability** (what), **benefit** (why).

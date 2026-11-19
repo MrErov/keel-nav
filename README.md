@@ -205,7 +205,7 @@ Keel Nav is designed to be 100% pure Markdown with zero lock-in. However, it pla
 
 | Tool | Phase | How it helps |
 |------|-------|--------------|
-| [**Graphify**](https://github.com/Graphify-Labs/graphify) | Phase 0 | Builds a deterministic Code Knowledge Graph of your repo. You can export it to **Obsidian** (`.canvas` files) to visually explore your architecture before writing specs, drastically reducing Phase 0 token consumption on large codebases. |
+| [**Graphify**](https://github.com/Graphify-Labs/graphify) | Phases 0, 1a & 2 | **CLI (Local):** Generates static dependency maps and exports them to **Obsidian** (`.canvas` files) so you can visually explore your architecture during Phase 0. **Remote MCP:** Connect [Graphify MCP](https://api.graphify.com/mcp) so agents can query the code dependency graph dynamically during spec writing (Phase 1a) and TDD (Phase 2), reducing file reads and token consumption. |
 | [**Obsidian**](https://obsidian.md/) | Phase 0 & 1 | Perfect for visualizing the output of Graphify and managing your `docs/context/` and `specs/` as a personal knowledge vault. |
 
 *Note: These tools are entirely optional. Keel Nav does not depend on them, and you can execute the entire 5-phase methodology using nothing but notepad and an LLM.*

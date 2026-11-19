@@ -108,6 +108,8 @@ meaningful. Skip it and the whole flow becomes theater.
 
 ### Step 2 — Locate target files (cost: ~300 tokens)
 
+> 💡 Graphify MCP Accelerator: Use Graphify MCP to find existing test patterns or trace the call graph of the target functions before writing tests.
+
 1. Read the affected bounded-context doc.
 2. From Section 3 (Interface Contracts), derive expected production file
    paths. Examples:
