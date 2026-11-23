@@ -197,6 +197,15 @@ Each harness is a **thin entry point** that points at `.meta-skills/`, not a for
 
 > **Why DeepSeek appears as a bridge and not a directory:** `dsh-bridges` is a community plugin that reads existing Claude Code / OpenCode / Cursor adapter layouts. Keel Nav doesn't need a `harnesses/deepseek/` directory — the other adapters are shipped, and `dsh-bridges` picks them up. See [`harnesses/dsh-bridges/`](harnesses/dsh-bridges/) for the integration notes. That is Keel Nav's agnosticism working as intended.
 
+## ⚙️ Execution Engines (Optional)
+
+Keel Nav is harness-agnostic and can be executed manually by pasting the prompts, or through deterministic execution engines:
+
+| Engine | Type | Description |
+|---|---|---|
+| **Manual / Plugin** | GUI / IDE | The DeepSeek Harness plugin provides a one-click visual interface to trigger phases. |
+| **[Poseidon Agent](https://github.com/MrErov/poseidon-agent)** | CLI | A deterministic execution engine. It reads the `.meta-skills/`, forces memory isolation (Goldfish), enforces the Gatekeeper, and auto-updates the spec's status (`draft` → `audited` → `certified`). |
+
 ---
 
 ## 🧰 Recommended Tooling (Optional)
