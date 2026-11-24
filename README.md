@@ -2,8 +2,8 @@
   <img src="docs/assets/logo.png" alt="Keel Nav Logo" width="600">
   <br><br>
   <h1>⚓ Keel Nav</h1>
-  <p><strong>The structural keel for AI-assisted engineering.</strong><br>
-  <em>Without it, you drift.</em></p>
+  <p><strong>Stop letting AI agents improvise your codebase.</strong><br>
+  <em>keel-nav is a harness-agnostic, 5-phase engineering protocol.</em></p>
 
   <p>
     <a href="https://github.com/MrErov/keel-nav/releases"><img src="https://img.shields.io/github/v/release/MrErov/keel-nav?color=blue" alt="Release"></a>
@@ -13,10 +13,13 @@
   </p>
 </div>
 
+> Want an autonomous agent that guides you through keel-nav out of the box? Meet [Poseidon Agent](https://github.com/MrErov/poseidon-agent).
+
 ---
 
 ## 📖 Table of Contents
-- [🧠 The Problem](#-the-problem)
+- [The Problem with Free-Loop Agents](#the-problem-with-free-loop-agents)
+- [Two Ways to Sail](#two-ways-to-sail)
 - [🛠️ The Solution: 5 Phases](#%EF%B8%8F-the-solution-5-phases)
 - [🏭 Proven in Production](#-proven-in-production)
 - [🚀 Quick Start](#-quick-start)
@@ -29,14 +32,20 @@
 
 ---
 
-## 🧠 The Problem
+## The Problem with Free-Loop Agents
 
-AI-assisted engineering has split into two unsustainable extremes:
+- **Context Rot:** unbounded conversations and repeated file reads bury the original requirements, so each new turn becomes less reliable than the last.
+- **Premature Coding:** agents start writing code before the user story, acceptance criteria, and tests are explicit, producing plausible but unverifiable changes.
+- **Zero Auditability:** without a durable spec, blind review, and phase gates, there is no reliable way to explain what changed, why it changed, or whether it satisfies the request.
 
-1. **Vibe coding** — loose prompts, no spec, no tests. Silent technical debt compounds until the project capsizes.
-2. **Mega-frameworks of autonomous sub-agents** — orchestrators that burn tokens, degrade context ("context rot"), and produce over-engineered code that nobody can audit.
+## Two Ways to Sail
 
-Both fail at the same point: **the human stops being the Navigator** and becomes a spectator to an opaque, expensive process.
+| Mode | How it works | Why choose it |
+|------|--------------|---------------|
+| **Bring Your Own Harness** | Follow the five phases manually in OpenCode, Claude Code, Cursor, Copilot, Gemini, or any other LLM interface. The prompts and Markdown artifacts remain the source of truth. | Maximum harness choice and direct human control, with no runtime dependency. |
+| **Autopilot with Poseidon Agent** | [Poseidon Agent](https://github.com/MrErov/poseidon-agent) reads the same `.meta-skills/`, isolates Goldfish memory, enforces the Gatekeeper, delegates execution, saves artifacts, and advances the spec state automatically. | Deterministic execution, memory isolation, auditable transitions, and less manual orchestration. |
+
+Both modes use the same Keel Nav protocol, templates, and quality gates. The difference is who operates the machinery, not what the methodology requires.
 
 ---
 
